@@ -7,14 +7,21 @@
     <string name="last_name_label">Last Name</string>
     <string name="birth_date_label">Birth date</string>
     <string name="birth_date_button">Select your birth date</string>
-    <string name="sex_label">Sex</string>
+    <string name="gender_label">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="height_label">Height</string>
     <string name="weight_label">Weight</string>
-    <string name="continue_button">Continue</string>
+    <string name="continue_button">Confirm</string>
+    <string name="age_val">Age: %d</string>
+    <!--Validation-->
+    <string name="no_blank">Cannot be blank!</string>
+    <string name="no_less_height">Cannot be less than 50 centimeters!</string>
+    <string name="no_more_height">Cannot be more than 280 centimeters!</string>
     <!--Home fragment-->
     <string name="home_fragment">Home</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello Home fragment</string>
+    <string name="no_less_weight">Cannot be less than 30 kilograms!</string>
+    <string name="no_more_weight">Cannot be more than 200 kilograms!</string>
 </resources>
