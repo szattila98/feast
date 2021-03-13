@@ -18,10 +18,9 @@
     <string name="no_blank">Cannot be blank!</string>
     <string name="no_less_height">Cannot be less than 50 centimeters!</string>
     <string name="no_more_height">Cannot be more than 280 centimeters!</string>
-    <!--Home fragment-->
-    <string name="home_fragment">Home</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello Home fragment</string>
     <string name="no_less_weight">Cannot be less than 30 kilograms!</string>
     <string name="no_more_weight">Cannot be more than 200 kilograms!</string>
+    <!--Home fragment-->
+    <string name="home_fragment">Home</string>
+    <string name="welcome_home">Welcome guy!</string>
 </resources>

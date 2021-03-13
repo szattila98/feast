@@ -1,0 +1,84 @@
+package ren.practice.feast.data
+
+import ren.practice.feast.model.DayPlan
+import ren.practice.feast.model.Meal
+import java.time.LocalDate
+
+class DataSource {
+
+    fun readDayPlan(): List<DayPlan> {
+        val date1 = LocalDate.now()
+        val date2 = LocalDate.now().plusDays(1)
+        val date3 = LocalDate.now().plusDays(2)
+        val date4 = LocalDate.now().plusDays(3)
+        val date5 = LocalDate.now().plusDays(4)
+        val date6 = LocalDate.now().plusDays(5)
+        val date7 = LocalDate.now().plusDays(6)
+
+        return listOf(
+            DayPlan(
+                date1, listOf(
+                    Meal(1, date1, "Kaja1", 1),
+                    Meal(2, date1, "Kaja1", 2),
+                    Meal(3, date1, "Kaja1", 3),
+                    Meal(4, date1, "Kaja1", 4),
+                    Meal(5, date1, "Kaja1", 5),
+                )
+            ),
+            DayPlan(
+                date2, listOf(
+                    Meal(6, date2, "Kaja2", 1),
+                    Meal(7, date2, "Kaja2", 2),
+                    Meal(8, date2, "Kaja2", 3),
+                    Meal(9, date2, "Kaja2", 4),
+                    Meal(10, date2, "Kaja2", 5),
+                )
+            ),
+            DayPlan(
+                date3, listOf(
+                    Meal(11, date3, "Kaja3", 1),
+                    Meal(12, date3, "Kaja3", 2),
+                    Meal(13, date3, "Kaja3", 3),
+                    Meal(14, date3, "Kaja3", 4),
+                    Meal(15, date3, "Kaja3", 5),
+                )
+            ),
+            DayPlan(
+                date4, listOf(
+                    Meal(16, date4, "Kaja4", 1),
+                    Meal(17, date4, "Kaja4", 2),
+                    Meal(18, date4, "Kaja4", 3),
+                    Meal(19, date4, "Kaja4", 4),
+                    Meal(20, date4, "Kaja4", 5),
+                )
+            ),
+            DayPlan(
+                date5, listOf(
+                    Meal(17, date5, "Kaja5", 2),
+                    Meal(16, date5, "Kaja5", 1),
+                    Meal(18, date5, "Kaja5", 3),
+                    Meal(19, date5, "Kaja5", 4),
+                    Meal(20, date5, "Kaja5", 5),
+                )
+            ),
+            DayPlan(
+                date6, listOf(
+                    Meal(16, date6, "Kaja6", 1),
+                    Meal(17, date6, "Kaja6", 2),
+                    Meal(18, date6, "Kaja6", 3),
+                    Meal(19, date6, "Kaja6", 4),
+                    Meal(20, date6, "Kaja6", 5),
+                )
+            ),
+            DayPlan(
+                date7, listOf(
+                    Meal(16, date7, "Kaja7", 1),
+                    Meal(17, date7, "Kaja7", 2),
+                    Meal(18, date7, "Kaja7", 3),
+                    Meal(19, date7, "Kaja7", 4),
+                    Meal(20, date7, "Kaja7", 5),
+                )
+            ),
+        )
+    }
+}
