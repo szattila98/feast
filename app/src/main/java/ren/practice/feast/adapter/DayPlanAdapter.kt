@@ -1,5 +1,6 @@
 package ren.practice.feast.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import ren.practice.feast.R
 import ren.practice.feast.model.DayPlan
 
 class DayPlanAdapter(
+    private val context: Context,
     private val dataSet: List<DayPlan>
 ) : RecyclerView.Adapter<DayPlanAdapter.DayPlanViewHolder>() {
 
@@ -29,7 +31,7 @@ class DayPlanAdapter(
 
     override fun onBindViewHolder(holder: DayPlanViewHolder, position: Int) {
         val dayPlan = dataSet[position]
-        val adapter = MealAdapter(dayPlan.meals)
+        val adapter = MealAdapter(context, dayPlan.meals)
         val layoutManager = LinearLayoutManager(
             holder.mealsRecyclerView.context, LinearLayoutManager.VERTICAL, false
         )

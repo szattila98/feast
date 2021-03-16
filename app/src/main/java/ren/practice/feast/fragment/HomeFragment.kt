@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
         val dayPlanRecyclerView = binding.dayPlanRecyclerview
         val linearLayoutManager = LinearLayoutManager(context)
         val myDataSet = DataSource().readDayPlan()
-        val dayPlanAdapter = DayPlanAdapter(myDataSet)
+        val dayPlanAdapter = DayPlanAdapter(requireContext(), myDataSet)
         dayPlanRecyclerView.apply {
             adapter = dayPlanAdapter
             layoutManager = linearLayoutManager
