@@ -13,8 +13,8 @@ class MealAdapter(private val context: Context, private val meals: List<Meal>) :
     RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
     class MealViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val mealShownName: TextView = view.findViewById(R.id.meal_card_shown_name)
-        val recipeLabel: TextView = view.findViewById(R.id.meal_card_recipe_label)
+        val mealShownName: TextView = view.findViewById(R.id.text_meal_shown_name)
+        val recipeLabel: TextView = view.findViewById(R.id.text_meal_recipe_label)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {

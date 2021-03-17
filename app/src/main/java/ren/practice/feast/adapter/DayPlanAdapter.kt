@@ -18,8 +18,8 @@ class DayPlanAdapter(
     private val viewPool = RecyclerView.RecycledViewPool()
 
     class DayPlanViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val dayPlanDateTextView: TextView = view.findViewById(R.id.day_plan_date)
-        val mealsRecyclerView: RecyclerView = view.findViewById(R.id.meal_recyclerview)
+        val dayPlanDateTextView: TextView = view.findViewById(R.id.text_day_plan_date)
+        val mealsRecyclerView: RecyclerView = view.findViewById(R.id.recycler_meals)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayPlanViewHolder {

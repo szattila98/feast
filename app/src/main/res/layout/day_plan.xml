@@ -7,14 +7,16 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/day_plan_date"
+        android:id="@+id/text_day_plan_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="2021.08.06" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/meal_recyclerview"
+        android:id="@+id/recycler_meals"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/meal_card"
+        tools:itemCount="3" />
 
 </LinearLayout>

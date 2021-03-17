@@ -18,5 +18,14 @@
         android:id="@+id/homeFragment"
         android:name="ren.practice.feast.fragment.HomeFragment"
         android:label="@string/home_fragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_newRecipe"
+            app:destination="@id/newRecipe" />
+    </fragment>
+    <fragment
+        android:id="@+id/newRecipe"
+        android:name="ren.practice.feast.fragment.NewRecipe"
+        android:label="@string/new_recipe_fragment"
+        tools:layout="@layout/fragment_new_recipe" />
 </navigation>

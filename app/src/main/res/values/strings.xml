@@ -24,4 +24,18 @@
     <string name="home_fragment">Home</string>
     <string name="welcome_home">Welcome guy!</string>
     <string name="meal_name">%d. %s</string>
+    <!--Home menu-->
+    <string name="add_recipe_menu_item">Add Recipe</string>
+    <!--New Recipe fragment-->
+    <string name="new_recipe_fragment">New Recipe</string>
+    <string name="name_of_new_recipe">Name of the recipe</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="add_ingredient">Add Ingredient</string>
+    <string name="description">Descriptions</string>
+    <string name="add_description">Add Descriptions</string>
+    <string name="hint_ingredient">Ingredient</string>
+    <string name="hint_amount">Amount</string>
+    <string name="hint_unit">Unit</string>
+    <string name="hint_number">Number</string>
+    <string name="hint_desc_text">Text</string>
 </resources>

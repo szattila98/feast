@@ -15,13 +15,13 @@
         android:clickable="true">
 
         <TextView
-            android:id="@+id/meal_card_shown_name"
+            android:id="@+id/text_meal_shown_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="1. Food show name" />
 
         <TextView
-            android:id="@+id/meal_card_recipe_label"
+            android:id="@+id/text_meal_recipe_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

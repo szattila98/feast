@@ -5,6 +5,16 @@ import java.time.LocalDate
 
 class DataSource {
 
+    private val recipes: MutableList<Recipe> = mutableListOf()
+
+    fun getRecipes(): MutableList<Recipe> {
+        return recipes
+    }
+
+    fun saveRecipe(recipe: Recipe) {
+        recipes.add(recipe)
+    }
+
     fun readDayPlan(): List<DayPlan> {
         val date1 = LocalDate.now()
         val date2 = LocalDate.now().plusDays(1)
@@ -17,7 +27,7 @@ class DataSource {
         val recipe = Recipe(
             1,
             "Recept",
-            mutableListOf(Ingredient("Hozzávaló", Amount("12", "kg"))),
+            mutableListOf(Ingredient("Hozzávaló", "12", "kg")),
             mutableListOf(
                 DescriptionRecord(1, "Tedd bele a tejet!")
             )
