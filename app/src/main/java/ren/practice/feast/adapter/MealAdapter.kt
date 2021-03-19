@@ -12,7 +12,7 @@ import ren.practice.feast.model.Meal
 class MealAdapter(private val context: Context, private val meals: List<Meal>) :
     RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
-    class MealViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class MealViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val mealShownName: TextView = view.findViewById(R.id.text_meal_shown_name)
         val recipeLabel: TextView = view.findViewById(R.id.text_meal_recipe_label)
     }
@@ -25,9 +25,11 @@ class MealAdapter(private val context: Context, private val meals: List<Meal>) :
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
         val meal = meals[position]
-        holder.mealShownName.text =
-            context.getString(R.string.meal_name, meal.orderNum, meal.shownName)
-        holder.recipeLabel.text = meal.recipe?.name
+        holder.apply {
+            mealShownName.text =
+                context.getString(R.string.meal_name, meal.orderNum, meal.shownName)
+            recipeLabel.text = meal.recipe?.name
+        }
     }
 
     override fun getItemCount(): Int {

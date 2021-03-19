@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".fragment.HomeFragment">
+    tools:context=".fragment.Home">
 
     <TextView
         android:id="@+id/text_welcome_home"
@@ -19,8 +19,9 @@
         android:id="@+id/recycler_day_plans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/text_welcome_home"
-        tools:listitem="@layout/day_plan"
-        tools:itemCount="3" />
+        tools:itemCount="3"
+        tools:listitem="@layout/day_plan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

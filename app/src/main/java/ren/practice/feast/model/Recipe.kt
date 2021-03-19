@@ -20,4 +20,4 @@ data class Recipe(
 
 data class Ingredient(val name: String, val amount: String, val unit: String)
 
-data class DescriptionRecord(val num: Int, val text: String)
+data class DescriptionRecord(val text: String)

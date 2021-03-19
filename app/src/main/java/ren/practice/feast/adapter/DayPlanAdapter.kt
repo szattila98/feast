@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ren.practice.feast.R
 import ren.practice.feast.model.DayPlan
@@ -17,7 +16,7 @@ class DayPlanAdapter(
 
     private val viewPool = RecyclerView.RecycledViewPool()
 
-    class DayPlanViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class DayPlanViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val dayPlanDateTextView: TextView = view.findViewById(R.id.text_day_plan_date)
         val mealsRecyclerView: RecyclerView = view.findViewById(R.id.recycler_meals)
     }
@@ -31,17 +30,9 @@ class DayPlanAdapter(
 
     override fun onBindViewHolder(holder: DayPlanViewHolder, position: Int) {
         val dayPlan = dataSet[position]
-        val adapter = MealAdapter(context, dayPlan.meals)
-        val layoutManager = LinearLayoutManager(
-            holder.mealsRecyclerView.context, LinearLayoutManager.VERTICAL, false
-        )
-        layoutManager.initialPrefetchItemCount = dayPlan.meals.size
-
         holder.apply {
             dayPlanDateTextView.text = dayPlan.date.toString()
-
-            mealsRecyclerView.layoutManager = layoutManager
-            mealsRecyclerView.adapter = adapter
+            mealsRecyclerView.adapter = MealAdapter(context, dayPlan.meals)
             mealsRecyclerView.setRecycledViewPool(viewPool)
         }
     }

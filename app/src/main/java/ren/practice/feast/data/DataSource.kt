@@ -3,7 +3,7 @@ package ren.practice.feast.data
 import ren.practice.feast.model.*
 import java.time.LocalDate
 
-class DataSource {
+object DataSource {
 
     private val recipes: MutableList<Recipe> = mutableListOf()
 
@@ -29,7 +29,7 @@ class DataSource {
             "Recept",
             mutableListOf(Ingredient("Hozzávaló", "12", "kg")),
             mutableListOf(
-                DescriptionRecord(1, "Tedd bele a tejet!")
+                DescriptionRecord("Tedd bele a tejet!")
             )
         )
 

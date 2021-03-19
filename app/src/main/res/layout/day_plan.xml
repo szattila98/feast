@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/text_day_plan_date"
@@ -14,9 +15,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_meals"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/meal_card"
-        tools:itemCount="3" />
+        tools:itemCount="3"
+        tools:listitem="@layout/meal_card" />
 
 </LinearLayout>
