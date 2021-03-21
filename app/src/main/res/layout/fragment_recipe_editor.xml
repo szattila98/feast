@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".fragment.NewRecipe">
+    tools:context=".fragment.RecipeEditorFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -113,7 +113,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/button_add_ingredient"
                 tools:itemCount="3"
-                tools:listitem="@layout/ingredient_record" />
+                tools:listitem="@layout/item_ingredient_record" />
 
             <TextView
                 android:id="@+id/text_descriptions"
@@ -163,7 +163,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/button_add_description"
                 tools:itemCount="1"
-                tools:listitem="@layout/description_record" />
+                tools:listitem="@layout/item_description_record" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

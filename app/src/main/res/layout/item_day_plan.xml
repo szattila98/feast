@@ -19,6 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:itemCount="3"
-        tools:listitem="@layout/meal_card" />
+        tools:listitem="@layout/item_meal_card" />
 
 </LinearLayout>

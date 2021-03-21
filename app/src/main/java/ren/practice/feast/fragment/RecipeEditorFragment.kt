@@ -6,17 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
 import ren.practice.feast.data.DataSource
-import ren.practice.feast.databinding.FragmentNewRecipeBinding
+import ren.practice.feast.databinding.FragmentRecipeEditorBinding
 import ren.practice.feast.model.DescriptionRecord
 import ren.practice.feast.model.Ingredient
 import ren.practice.feast.model.Recipe
 
-class NewRecipe : Fragment() {
+class RecipeEditorFragment : Fragment() {
 
-    private var _binding: FragmentNewRecipeBinding? = null
+    private var _binding: FragmentRecipeEditorBinding? = null
     private val binding get() = _binding!!
 
     private val ingredients = mutableListOf<Ingredient>()
@@ -27,7 +28,7 @@ class NewRecipe : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNewRecipeBinding.inflate(inflater, container, false)
+        _binding = FragmentRecipeEditorBinding.inflate(inflater, container, false)
         binding.recyclerIngredients.adapter = IngredientAdapter(requireContext(), ingredients)
         binding.recyclerDescriptions.adapter = DescriptionAdapter(requireContext(), descriptionList)
         binding.buttonAddIngredient.setOnClickListener { addIngredient(); }
@@ -80,6 +81,7 @@ class NewRecipe : Fragment() {
             descriptionList
         )
         DataSource.saveRecipe(recipe)
-        // TODO to recipe view
+        val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeListFragment()
+        binding.root.findNavController().navigate(action)
     }
 }

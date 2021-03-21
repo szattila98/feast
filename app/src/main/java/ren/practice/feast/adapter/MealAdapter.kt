@@ -19,7 +19,7 @@ class MealAdapter(private val context: Context, private val meals: List<Meal>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
         val view = LayoutInflater
-            .from(parent.context).inflate(R.layout.meal_card, parent, false)
+            .from(parent.context).inflate(R.layout.item_meal_card, parent, false)
         return MealViewHolder(view)
     }
 

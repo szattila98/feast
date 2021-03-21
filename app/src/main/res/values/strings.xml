@@ -25,7 +25,8 @@
     <string name="welcome_home">Welcome guy!</string>
     <string name="meal_name">%d. %s</string>
     <!--Home menu-->
-    <string name="add_recipe_menu_item">Add Recipe</string>
+    <string name="item_add_recipe">Add Recipe</string>
+    <string name="item_recipe_list">Recipe List</string>
     <!--New Recipe fragment-->
     <string name="new_recipe_fragment">New Recipe</string>
     <string name="name_of_new_recipe">Name of the recipe</string>
@@ -38,4 +39,6 @@
     <string name="hint_unit">Unit</string>
     <string name="hint_number">Number</string>
     <string name="hint_desc_text">Text</string>
+    <!--Recipe List Fragment-->
+    <string name="recipe_list_fragment">Recipe List</string>
 </resources>

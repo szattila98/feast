@@ -16,16 +16,27 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="ren.practice.feast.fragment.Home"
+        android:name="ren.practice.feast.fragment.HomeFragment"
         android:label="@string/home_fragment"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_newRecipe"
             app:destination="@id/newRecipe" />
+        <action
+            android:id="@+id/action_homeFragment_to_recipeListFragment"
+            app:destination="@id/recipeListFragment" />
     </fragment>
     <fragment
         android:id="@+id/newRecipe"
-        android:name="ren.practice.feast.fragment.NewRecipe"
+        android:name="ren.practice.feast.fragment.RecipeEditorFragment"
         android:label="@string/new_recipe_fragment"
-        tools:layout="@layout/fragment_new_recipe" />
+        tools:layout="@layout/fragment_recipe_editor">
+        <action
+            android:id="@+id/action_newRecipe_to_recipeListFragment"
+            app:destination="@id/recipeListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeListFragment"
+        android:name="ren.practice.feast.fragment.RecipeListFragment"
+        android:label="@string/recipe_list_fragment" />
 </navigation>

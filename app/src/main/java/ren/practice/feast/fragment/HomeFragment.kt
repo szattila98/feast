@@ -9,7 +9,7 @@ import ren.practice.feast.adapter.DayPlanAdapter
 import ren.practice.feast.data.DataSource
 import ren.practice.feast.databinding.FragmentHomeBinding
 
-class Home : Fragment() {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -40,14 +40,17 @@ class Home : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.add_recipe_menu_item -> {
-                val action = HomeDirections.actionHomeFragmentToNewRecipe()
-                binding.root.findNavController().navigate(action)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.item_new_recipe -> {
+            val action = HomeFragmentDirections.actionHomeFragmentToNewRecipe()
+            binding.root.findNavController().navigate(action)
+            true
         }
+        R.id.item_recipe_list -> {
+            val action = HomeFragmentDirections.actionHomeFragmentToRecipeListFragment()
+            binding.root.findNavController().navigate(action)
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 }

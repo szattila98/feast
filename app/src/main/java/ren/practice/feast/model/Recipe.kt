@@ -8,15 +8,7 @@ data class Recipe(
     val ingredients: MutableList<Ingredient> = mutableListOf(),
     val description: MutableList<DescriptionRecord> = mutableListOf(),
     val created: LocalDate = LocalDate.now()
-) {
-    fun addIngredients(newIngredients: List<Ingredient>) {
-        ingredients.addAll(newIngredients)
-    }
-
-    fun addDescriptions(newDescription: List<DescriptionRecord>) {
-        description.addAll(newDescription)
-    }
-}
+)
 
 data class Ingredient(val name: String, val amount: String, val unit: String)
 

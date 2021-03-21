@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/add_recipe_menu_item"
-        android:title="@string/add_recipe_menu_item" />
+        android:id="@+id/item_new_recipe"
+        android:title="@string/item_add_recipe" />
+    <item
+        android:id="@+id/item_recipe_list"
+        android:title="@string/item_recipe_list" />
 </menu>

@@ -24,7 +24,7 @@ class DayPlanAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayPlanViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.day_plan, parent, false)
+            .inflate(R.layout.item_day_plan, parent, false)
         return DayPlanViewHolder(view)
     }
 

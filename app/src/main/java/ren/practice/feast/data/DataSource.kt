@@ -5,7 +5,8 @@ import java.time.LocalDate
 
 object DataSource {
 
-    private val recipes: MutableList<Recipe> = mutableListOf()
+    private val recipes: MutableList<Recipe> =
+        mutableListOf(Recipe(1, "Recipe", mutableListOf(), mutableListOf()))
 
     fun getRecipes(): MutableList<Recipe> {
         return recipes
