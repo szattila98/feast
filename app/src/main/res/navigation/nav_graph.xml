@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_homeFragment_to_recipeListFragment"
             app:destination="@id/recipeListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newRecipe"
@@ -32,11 +35,25 @@
         android:label="@string/new_recipe_fragment"
         tools:layout="@layout/fragment_recipe_editor">
         <action
-            android:id="@+id/action_newRecipe_to_recipeListFragment"
-            app:destination="@id/recipeListFragment" />
+            android:id="@+id/action_newRecipe_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="ren.practice.feast.fragment.RecipeListFragment"
-        android:label="@string/recipe_list_fragment" />
+        android:label="@string/recipe_list_fragment"
+        tools:layout="@layout/fragment_recipe_list">
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="ren.practice.feast.fragment.RecipeDetailsFragment"
+        android:label="@string/recipe_details_fragment"
+        tools:layout="@layout/fragment_recipe_details">
+        <argument
+            android:name="recipe"
+            app:argType="ren.practice.feast.model.Recipe" />
+    </fragment>
 </navigation>

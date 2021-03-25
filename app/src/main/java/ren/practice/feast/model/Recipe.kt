@@ -1,15 +1,20 @@
 package ren.practice.feast.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
+@Parcelize
 data class Recipe(
     val id: Int,
     val name: String,
     val ingredients: MutableList<Ingredient> = mutableListOf(),
     val description: MutableList<DescriptionRecord> = mutableListOf(),
     val created: LocalDate = LocalDate.now()
-)
+) : Parcelable
 
-data class Ingredient(val name: String, val amount: String, val unit: String)
+@Parcelize
+data class Ingredient(val name: String, val amount: String, val unit: String) : Parcelable
 
-data class DescriptionRecord(val text: String)
+@Parcelize
+data class DescriptionRecord(val text: String) : Parcelable

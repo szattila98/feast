@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import ren.practice.feast.R
+import ren.practice.feast.fragment.HomeFragmentDirections
 import ren.practice.feast.model.Meal
 
 class MealAdapter(private val context: Context, private val meals: List<Meal>) :
@@ -29,6 +31,14 @@ class MealAdapter(private val context: Context, private val meals: List<Meal>) :
             mealShownName.text =
                 context.getString(R.string.meal_name, meal.orderNum, meal.shownName)
             recipeLabel.text = meal.recipe?.name
+        }
+        meal.recipe?.let {
+            val recipe = it
+            holder.recipeLabel.setOnClickListener {
+                val action = HomeFragmentDirections
+                    .actionHomeFragmentToRecipeDetailsFragment(recipe)
+                Navigation.findNavController(holder.itemView).navigate(action)
+            }
         }
     }
 

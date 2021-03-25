@@ -81,7 +81,7 @@ class RecipeEditorFragment : Fragment() {
             descriptionList
         )
         DataSource.saveRecipe(recipe)
-        val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeListFragment()
+        val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(recipe)
         binding.root.findNavController().navigate(action)
     }
 }

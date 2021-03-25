@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import ren.practice.feast.R
+import ren.practice.feast.fragment.RecipeListFragmentDirections
 import ren.practice.feast.model.Recipe
 
 class RecipeAdapter(private val context: Context, private val recipes: List<Recipe>) :
@@ -28,6 +30,11 @@ class RecipeAdapter(private val context: Context, private val recipes: List<Reci
         holder.apply {
             recipeName.text = recipe.name
             created.text = recipe.created.toString()
+        }
+        holder.itemView.setOnClickListener {
+            val action = RecipeListFragmentDirections
+                .actionRecipeListFragmentToRecipeDetailsFragment(recipe)
+            Navigation.findNavController(holder.itemView).navigate(action)
         }
     }
 
