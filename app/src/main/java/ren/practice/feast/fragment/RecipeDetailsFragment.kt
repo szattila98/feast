@@ -26,9 +26,9 @@ class RecipeDetailsFragment : Fragment() {
             binding.textRecipeDetailsName.text = recipe.name
             binding.textRecipeDetailsCreated.text = recipe.created.toString()
             binding.recyclerRecipeDetailsIngredients.adapter =
-                IngredientAdapter(requireContext(), recipe.ingredients)
+                IngredientAdapter(recipe.ingredients)
             binding.recyclerRecipeDetailsDescriptions.adapter =
-                DescriptionAdapter(requireContext(), recipe.description)
+                DescriptionAdapter(recipe.description)
         }
 
         return binding.root

@@ -43,4 +43,6 @@
     <string name="recipe_list_fragment">Recipe List</string>
     <!--Recipe Details Fragment-->
     <string name="recipe_details_fragment">Recipe Details</string>
+    <!--Item Description Record-->
+    <string name="description_record_list_item">%s. %s</string>
 </resources>

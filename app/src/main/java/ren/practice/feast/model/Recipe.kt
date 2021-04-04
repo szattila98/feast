@@ -5,6 +5,19 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
 @Parcelize
+data class Meal(
+    val id: Int,
+    val date: LocalDate,
+    val shownName: String,
+    val orderNum: Int,
+    var recipe: Recipe? = null
+) : Parcelable {
+    fun addRecipe(newRecipe: Recipe) {
+        recipe = newRecipe
+    }
+}
+
+@Parcelize
 data class Recipe(
     val id: Int,
     val name: String,

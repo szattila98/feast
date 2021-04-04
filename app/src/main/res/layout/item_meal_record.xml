@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="ren.practice.feast.model.Ingredient" />
+            type="ren.practice.feast.model.Meal" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -24,27 +24,27 @@
             android:paddingBottom="8dp">
 
             <TextView
-                android:id="@+id/text_ingredient_name"
+                android:id="@+id/text_meal_shown_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.name}"
-                tools:text="1. Ingredient" />
+                android:text="@{item.shownName}"
+                tools:text="1. Food show name" />
 
             <TextView
-                android:id="@+id/text_ingredient_amount"
+                android:id="@+id/text_meal_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@{item.amount}"
-                tools:text="100" />
+                android:text="@{item.date.toString()}"
+                tools:text="1998.08.06" />
 
             <TextView
-                android:id="@+id/text_ingredient_unit"
+                android:id="@+id/text_meal_recipe_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@{item.unit}"
-                tools:text="kg" />
+                android:text="@{item.recipe.name}"
+                tools:text="Recipe" />
 
         </LinearLayout>
 

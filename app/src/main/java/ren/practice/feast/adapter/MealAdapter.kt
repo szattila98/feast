@@ -1,48 +1,46 @@
 package ren.practice.feast.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import ren.practice.feast.R
+import ren.practice.feast.databinding.ItemMealRecordBinding
 import ren.practice.feast.fragment.HomeFragmentDirections
 import ren.practice.feast.model.Meal
 
-class MealAdapter(private val context: Context, private val meals: List<Meal>) :
+// TODO to mealList
+class MealAdapter(private val meals: List<Meal>) :
     RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
-    class MealViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val mealShownName: TextView = view.findViewById(R.id.text_meal_shown_name)
-        val recipeLabel: TextView = view.findViewById(R.id.text_meal_recipe_label)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
-        val view = LayoutInflater
-            .from(parent.context).inflate(R.layout.item_meal_card, parent, false)
-        return MealViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemMealRecordBinding.inflate(inflater)
+        return MealViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
         val meal = meals[position]
-        holder.apply {
-            mealShownName.text =
-                context.getString(R.string.meal_name, meal.orderNum, meal.shownName)
-            recipeLabel.text = meal.recipe?.name
-        }
-        meal.recipe?.let {
-            val recipe = it
-            holder.recipeLabel.setOnClickListener {
-                val action = HomeFragmentDirections
-                    .actionHomeFragmentToRecipeDetailsFragment(recipe)
+        holder.bind(meal)
+        // TODO callback
+        holder.binding.textMealRecipeLabel.setOnClickListener {
+            val action = meal.recipe?.let { it1 ->
+                HomeFragmentDirections
+                    .actionHomeFragmentToRecipeDetailsFragment(it1)
+            }
+            if (action != null) {
                 Navigation.findNavController(holder.itemView).navigate(action)
             }
         }
     }
 
-    override fun getItemCount(): Int {
-        return meals.size
+    override fun getItemCount(): Int = meals.size
+
+    class MealViewHolder(val binding: ItemMealRecordBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(meal: Meal) {
+            binding.item = meal
+            binding.executePendingBindings()
+        }
     }
 }

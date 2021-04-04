@@ -6,22 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
-import ren.practice.feast.data.DataSource
 import ren.practice.feast.databinding.FragmentRecipeEditorBinding
 import ren.practice.feast.model.DescriptionRecord
 import ren.practice.feast.model.Ingredient
 import ren.practice.feast.model.Recipe
+import ren.practice.feast.viewModel.RecipeEditorViewModel
 
 class RecipeEditorFragment : Fragment() {
 
     private var _binding: FragmentRecipeEditorBinding? = null
     private val binding get() = _binding!!
 
-    private val ingredients = mutableListOf<Ingredient>()
-    private val descriptionList = mutableListOf<DescriptionRecord>()
+    private val viewModel: RecipeEditorViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,11 +29,19 @@ class RecipeEditorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeEditorBinding.inflate(inflater, container, false)
-        binding.recyclerIngredients.adapter = IngredientAdapter(requireContext(), ingredients)
-        binding.recyclerDescriptions.adapter = DescriptionAdapter(requireContext(), descriptionList)
+
+        binding.recipeEditorViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.recyclerIngredients.adapter =
+            viewModel.ingredients.value?.let { IngredientAdapter(it) }
+        binding.recyclerDescriptions.adapter =
+            viewModel.descriptionList.value?.let { DescriptionAdapter(it) }
+
         binding.buttonAddIngredient.setOnClickListener { addIngredient(); }
         binding.buttonAddDescription.setOnClickListener { addDescription(); }
-        binding.fabConfirm.setOnClickListener { addRecipe() }
+        binding.fabConfirm.setOnClickListener { submitRecipe() }
+
         return binding.root
     }
 
@@ -43,7 +51,7 @@ class RecipeEditorFragment : Fragment() {
     }
 
     private fun addIngredient() {
-        ingredients.add(
+        viewModel.addIngredient(
             Ingredient(
                 binding.editIngredientName.text.toString(),
                 binding.editIngredientAmount.text.toString(),
@@ -52,35 +60,34 @@ class RecipeEditorFragment : Fragment() {
         )
         binding.recyclerIngredients.adapter?.notifyDataSetChanged()
         clearEditTexts(
-            listOf(
-                binding.editIngredientName,
-                binding.editIngredientAmount,
-                binding.editIngredientUnit
-            )
+            binding.editIngredientName,
+            binding.editIngredientAmount,
+            binding.editIngredientUnit
         )
     }
 
     private fun addDescription() {
-        val description = DescriptionRecord(binding.editDescriptionText.text.toString())
-        descriptionList.add(description)
+        viewModel.addDescriptionRecord(
+            DescriptionRecord(binding.editDescriptionText.text.toString())
+        )
         binding.recyclerDescriptions.adapter?.notifyDataSetChanged()
-        clearEditTexts(listOf(binding.editDescriptionText))
+        clearEditTexts(binding.editDescriptionText)
     }
 
-    private fun clearEditTexts(editTexts: List<EditText>) {
+    private fun clearEditTexts(vararg editTexts: EditText) {
         for (v in editTexts) {
             v.text?.clear()
         }
     }
 
-    private fun addRecipe() {
+    private fun submitRecipe() {
         val recipe = Recipe(
             1,
             binding.editRecipeName.text.toString(),
-            ingredients,
-            descriptionList
+            viewModel.ingredients.value!!,
+            viewModel.descriptionList.value!!
         )
-        DataSource.saveRecipe(recipe)
+        viewModel.submitRecipe(recipe)
         val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(recipe)
         binding.root.findNavController().navigate(action)
     }

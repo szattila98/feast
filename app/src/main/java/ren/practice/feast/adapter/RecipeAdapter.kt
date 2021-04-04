@@ -1,11 +1,9 @@
 package ren.practice.feast.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ren.practice.feast.R
+import ren.practice.feast.databinding.ItemRecipeRecordBinding
 import ren.practice.feast.model.Recipe
 
 class RecipeAdapter(
@@ -14,31 +12,30 @@ class RecipeAdapter(
 ) :
     RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
-    class RecipeViewHolder(view: View, clickAtPosition: (Int) -> Unit) :
-        RecyclerView.ViewHolder(view) {
-        val recipeName: TextView = view.findViewById(R.id.text_recipe_name)
-        val created: TextView = view.findViewById(R.id.text_recipe_created)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemRecipeRecordBinding.inflate(inflater)
+        return RecipeViewHolder(binding) { clickListener(recipes[it]) }
+    }
+
+    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) =
+        holder.bind(recipes[position])
+
+    override fun getItemCount(): Int = recipes.size
+    
+    class RecipeViewHolder(
+        private val binding: ItemRecipeRecordBinding,
+        clickAtPosition: (Int) -> Unit
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener { clickAtPosition(adapterPosition) }
         }
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val view = LayoutInflater
-            .from(parent.context).inflate(R.layout.item_recipe_record, parent, false)
-        return RecipeViewHolder(view) { clickListener(recipes[it]) }
-    }
-
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        val recipe = recipes[position]
-        holder.apply {
-            recipeName.text = recipe.name
-            created.text = recipe.created.toString()
+        fun bind(recipe: Recipe) {
+            binding.item = recipe
+            binding.executePendingBindings()
         }
-    }
-
-    override fun getItemCount(): Int {
-        return recipes.size
     }
 }
