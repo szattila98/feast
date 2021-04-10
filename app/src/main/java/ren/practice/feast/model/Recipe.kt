@@ -3,13 +3,13 @@ package ren.practice.feast.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Parcelize
 data class Meal(
-    val id: Int,
-    val date: LocalDate,
+    val id: Long,
+    val date: LocalDateTime,
     val shownName: String,
-    val orderNum: Int,
     var recipe: Recipe? = null
 ) : Parcelable {
     fun addRecipe(newRecipe: Recipe) {

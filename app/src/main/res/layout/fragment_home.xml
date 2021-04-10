@@ -13,22 +13,14 @@
         android:padding="16dp"
         tools:context=".fragment.HomeFragment">
 
-        <TextView
-            android:id="@+id/text_welcome_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/welcome_home"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_meals"
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendar_week"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/text_welcome_home"
-            tools:itemCount="15"
-            tools:listitem="@layout/item_meal_record" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mcv_calendarMode="week"
+            app:mcv_firstDayOfWeek="monday" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
