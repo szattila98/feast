@@ -9,8 +9,7 @@ import ren.practice.feast.model.Recipe
 class RecipeAdapter(
     private val recipes: List<Recipe>,
     private val clickListener: (Recipe) -> Unit
-) :
-    RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -18,16 +17,14 @@ class RecipeAdapter(
         return RecipeViewHolder(binding) { clickListener(recipes[it]) }
     }
 
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) =
-        holder.bind(recipes[position])
+    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) = holder.bind(recipes[position])
 
     override fun getItemCount(): Int = recipes.size
-    
+
     class RecipeViewHolder(
         private val binding: ItemRecipeRecordBinding,
         clickAtPosition: (Int) -> Unit
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener { clickAtPosition(adapterPosition) }
@@ -35,7 +32,7 @@ class RecipeAdapter(
 
         fun bind(recipe: Recipe) {
             binding.item = recipe
-            binding.executePendingBindings()
+            // binding.executePendingBindings()
         }
     }
 }

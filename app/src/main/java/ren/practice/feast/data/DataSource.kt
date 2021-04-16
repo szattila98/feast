@@ -4,6 +4,7 @@ import ren.practice.feast.model.DescriptionRecord
 import ren.practice.feast.model.Ingredient
 import ren.practice.feast.model.Meal
 import ren.practice.feast.model.Recipe
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 object DataSource {
@@ -11,7 +12,7 @@ object DataSource {
     private val recipes: MutableList<Recipe> =
         mutableListOf(Recipe(1, "Recipe", mutableListOf(), mutableListOf()))
 
-    fun getRecipes(): MutableList<Recipe> {
+    fun getRecipes(): List<Recipe> {
         return recipes
     }
 
@@ -45,5 +46,11 @@ object DataSource {
             Meal(6, date6, "Kaja1", recipe),
             Meal(7, date7, "Kaja1", recipe),
         )
+    }
+
+    fun readRelevantMeals(date: LocalDate): List<Meal> {
+        return readMeals().filter {
+            it.date.toLocalDate().isEqual(date)
+        }
     }
 }

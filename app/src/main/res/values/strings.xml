@@ -45,4 +45,6 @@
     <string name="recipe_details_fragment">Recipe Details</string>
     <!--Item Description Record-->
     <string name="description_record_list_item">%s. %s</string>
+    <!--Item Meal Record-->
+    <string name="recipe_btn">Recipe</string>
 </resources>

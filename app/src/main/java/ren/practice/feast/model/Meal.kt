@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 data class Meal(
     val id: Long,
     val date: LocalDateTime,
-    val shownName: String,
+    val name: String,
     var recipe: Recipe? = null
 ) : Parcelable {
     fun addRecipe(newRecipe: Recipe) {

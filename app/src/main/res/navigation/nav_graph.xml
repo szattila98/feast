@@ -6,15 +6,6 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/recordUserFragment"
-        android:name="ren.practice.feast.fragment.RecordUserFragment"
-        android:label="@string/record_user_fragment"
-        tools:layout="@layout/fragment_record_user">
-        <action
-            android:id="@+id/action_recordUserFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/homeFragment"
         android:name="ren.practice.feast.fragment.HomeFragment"
         android:label="@string/home_fragment"

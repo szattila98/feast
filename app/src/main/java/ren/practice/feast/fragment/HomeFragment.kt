@@ -9,8 +9,10 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import ren.practice.feast.R
+import ren.practice.feast.adapter.MealAdapter
 import ren.practice.feast.data.DataSource
 import ren.practice.feast.databinding.FragmentHomeBinding
+import ren.practice.feast.model.Meal
 import java.time.LocalDate
 
 
@@ -18,6 +20,8 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val meals: MutableList<Meal> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -30,10 +34,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
         initCalendar()
         addCalendarDots()
-
+        initRecycler()
         return binding.root
     }
 
@@ -66,14 +69,14 @@ class HomeFragment : Fragment() {
         val plusDaysMin = 7 + currentDate.dayOfWeek.value - 1
         val plusDaysMax = 7 + (7 - currentDate.dayOfWeek.value)
         binding.calendarWeek.state().edit()
-            .setMinimumDate(
-                CalendarDay.from(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth - plusDaysMin)
-            )
-            .setMaximumDate(
-                CalendarDay.from(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth + plusDaysMax)
-            )
+            .setMinimumDate(getCalendarDay(currentDate.plusDays((-plusDaysMin).toLong())))
+            .setMaximumDate(getCalendarDay(currentDate.plusDays((plusDaysMax).toLong())))
             .commit()
         binding.calendarWeek.selectedDate = CalendarDay.today()
+        binding.calendarWeek.setOnDateChangedListener { _, date, _ ->
+            loadMeals(DataSource.readRelevantMeals(LocalDate.of(date.year, date.month, date.day)))
+            binding.recyclerMeals.adapter?.notifyDataSetChanged()
+        }
     }
 
     private fun addCalendarDots() {
@@ -81,9 +84,29 @@ class HomeFragment : Fragment() {
         val dates: MutableSet<CalendarDay> = mutableSetOf()
         for (meal in meals) {
             val date = meal.date.toLocalDate()
-            dates.add(CalendarDay.from(date.year, date.monthValue, date.dayOfMonth))
+            dates.add(getCalendarDay(date))
         }
         binding.calendarWeek.addDecorator(EventDecorator(resources.getColor(R.color.red, context?.theme), dates))
+    }
+
+    private fun getCalendarDay(date: LocalDate): CalendarDay {
+        return CalendarDay.from(date.year, date.monthValue, date.dayOfMonth)
+    }
+
+    private fun initRecycler() {
+        loadMeals(DataSource.readRelevantMeals(LocalDate.now()))
+        binding.recyclerMeals.adapter = MealAdapter(meals) { meal ->
+            meal.recipe?.let {
+                val action = HomeFragmentDirections
+                    .actionHomeFragmentToRecipeDetailsFragment(it)
+                binding.root.findNavController().navigate(action)
+            }
+        }
+    }
+
+    private fun loadMeals(newMeals: List<Meal>) {
+        meals.clear()
+        meals.addAll(newMeals)
     }
 
     class EventDecorator(private val color: Int, private val dates: Set<CalendarDay>) : DayViewDecorator {
