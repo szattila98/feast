@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="ren.practice.feast.model.Ingredient" />
+            type="ren.practice.core.domain.Ingredient" />
     </data>
 
     <androidx.cardview.widget.CardView

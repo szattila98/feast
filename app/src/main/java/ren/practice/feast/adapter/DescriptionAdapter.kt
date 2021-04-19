@@ -3,11 +3,11 @@ package ren.practice.feast.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ren.practice.core.domain.Description
 import ren.practice.feast.databinding.ItemDescriptionRecordBinding
-import ren.practice.feast.model.DescriptionRecord
 
 class DescriptionAdapter(
-    private val descriptionRecords: MutableList<DescriptionRecord>
+    private val descriptions: MutableList<Description>
 ) : RecyclerView.Adapter<DescriptionAdapter.DescriptionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DescriptionViewHolder {
@@ -17,15 +17,15 @@ class DescriptionAdapter(
     }
 
     override fun onBindViewHolder(holder: DescriptionViewHolder, position: Int) =
-        holder.bind(descriptionRecords[position], position)
+        holder.bind(descriptions[position], position)
 
-    override fun getItemCount(): Int = descriptionRecords.size
+    override fun getItemCount(): Int = descriptions.size
 
     class DescriptionViewHolder(private val binding: ItemDescriptionRecordBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(descriptionRecord: DescriptionRecord, position: Int) {
-            binding.item = descriptionRecord
+        fun bind(description: Description, position: Int) {
+            binding.item = description
             binding.num = position + 1
             binding.executePendingBindings()
         }

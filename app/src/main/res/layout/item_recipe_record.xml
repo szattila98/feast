@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="ren.practice.feast.model.Recipe" />
+            type="ren.practice.core.domain.Recipe" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -3,8 +3,8 @@ package ren.practice.feast.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ren.practice.core.domain.Ingredient
 import ren.practice.feast.databinding.ItemIngredientRecordBinding
-import ren.practice.feast.model.Ingredient
 
 class IngredientAdapter(
     private val ingredients: MutableList<Ingredient>

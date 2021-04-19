@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ren.practice.core.domain.Meal
 import ren.practice.feast.databinding.ItemMealRecordBinding
-import ren.practice.feast.model.Meal
 
 class MealAdapter(
     private val meals: List<Meal>,

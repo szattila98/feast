@@ -10,7 +10,7 @@
 
         <variable
             name="item"
-            type="ren.practice.feast.model.DescriptionRecord" />
+            type="ren.practice.core.domain.Description" />
     </data>
 
     <androidx.cardview.widget.CardView

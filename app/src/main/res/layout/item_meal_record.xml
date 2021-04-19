@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="ren.practice.feast.model.Meal" />
+            type="ren.practice.core.domain.Meal" />
 
         <variable
             name="time"

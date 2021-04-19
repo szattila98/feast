@@ -1,9 +1,9 @@
 package ren.practice.feast.data
 
-import ren.practice.feast.model.DescriptionRecord
-import ren.practice.feast.model.Ingredient
-import ren.practice.feast.model.Meal
-import ren.practice.feast.model.Recipe
+import ren.practice.core.domain.Description
+import ren.practice.core.domain.Ingredient
+import ren.practice.core.domain.Meal
+import ren.practice.core.domain.Recipe
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -33,7 +33,7 @@ object DataSource {
             "Recept",
             mutableListOf(Ingredient("Hozzávaló", "12", "kg")),
             mutableListOf(
-                DescriptionRecord("Tedd bele a tejet!")
+                Description("Tedd bele a tejet!")
             )
         )
 

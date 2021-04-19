@@ -8,11 +8,11 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
+import ren.practice.core.domain.Meal
 import ren.practice.feast.R
 import ren.practice.feast.adapter.MealAdapter
 import ren.practice.feast.data.DataSource
 import ren.practice.feast.databinding.FragmentHomeBinding
-import ren.practice.feast.model.Meal
 import java.time.LocalDate
 
 

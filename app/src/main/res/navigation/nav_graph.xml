@@ -45,6 +45,6 @@
         tools:layout="@layout/fragment_recipe_details">
         <argument
             android:name="recipe"
-            app:argType="ren.practice.feast.model.Recipe" />
+            app:argType="ren.practice.core.domain.Recipe" />
     </fragment>
 </navigation>

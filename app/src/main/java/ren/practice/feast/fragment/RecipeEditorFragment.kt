@@ -8,12 +8,12 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import ren.practice.core.domain.Description
+import ren.practice.core.domain.Ingredient
+import ren.practice.core.domain.Recipe
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
 import ren.practice.feast.databinding.FragmentRecipeEditorBinding
-import ren.practice.feast.model.DescriptionRecord
-import ren.practice.feast.model.Ingredient
-import ren.practice.feast.model.Recipe
 import ren.practice.feast.viewModel.RecipeEditorViewModel
 
 class RecipeEditorFragment : Fragment() {
@@ -68,7 +68,7 @@ class RecipeEditorFragment : Fragment() {
 
     private fun addDescription() {
         viewModel.addDescriptionRecord(
-            DescriptionRecord(binding.editDescriptionText.text.toString())
+            Description(binding.editDescriptionText.text.toString())
         )
         binding.recyclerDescriptions.adapter?.notifyDataSetChanged()
         clearEditTexts(binding.editDescriptionText)
