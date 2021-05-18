@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.time.LocalDate
 
 data class Recipe(
-    val id: Int,
+    val id: Int = 0,
     val name: String,
     val ingredients: MutableList<Ingredient> = mutableListOf(),
     val description: MutableList<Description> = mutableListOf(),

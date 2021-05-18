@@ -3,7 +3,7 @@ apply from: 'dependencies.gradle'
 
 buildscript {
 
-    ext.kotlin_version = "1.4.32"
+    ext.kotlin_version = "1.4.32" // TODO somehow put these as extsk into dependencies
     ext.nav_version = "2.3.5"
 
     repositories {

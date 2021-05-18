@@ -1,3 +1,8 @@
 package ren.practice.core.interactors
 
-class CreateRecipe
+import ren.practice.core.data.repositories.RecipeRepository
+import ren.practice.core.domain.Recipe
+
+class CreateRecipe(private val repository: RecipeRepository) {
+    suspend operator fun invoke(recipe: Recipe) = repository.createRecipe(recipe)
+}
