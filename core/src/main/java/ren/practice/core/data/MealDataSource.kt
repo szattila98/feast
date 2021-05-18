@@ -4,8 +4,8 @@ import ren.practice.core.domain.Meal
 
 interface MealDataSource {
 
-    suspend fun readMeals(): List<Meal>
+    suspend fun saveMeal(meal: Meal)
 
-    suspend fun createMeal(meal: Meal): Meal
+    suspend fun readMeals(): List<Meal>
 
 }

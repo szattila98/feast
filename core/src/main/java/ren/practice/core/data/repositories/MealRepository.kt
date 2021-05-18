@@ -6,12 +6,10 @@ import java.time.LocalDate
 
 class MealRepository(private val dataSource: MealDataSource) {
 
-    private suspend fun readMeals() = dataSource.readMeals()
+    suspend fun saveMeal(meal: Meal) = dataSource.saveMeal(meal)
 
     suspend fun readRelevantMeals(date: LocalDate) = dataSource.readMeals().filter {
         it.date.toLocalDate().isEqual(date)
     }
-
-    suspend fun createMeal(meal: Meal) = dataSource.createMeal(meal)
 
 }
