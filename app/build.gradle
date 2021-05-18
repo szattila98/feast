@@ -7,13 +7,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    def globalConfiguration = rootProject.ext
+
+    compileSdkVersion globalConfiguration.androidCompileSdkVersion
+    buildToolsVersion globalConfiguration.androidBuildToolsVersion
 
     defaultConfig {
         applicationId "ren.practice.feast"
-        minSdkVersion 26
-        targetSdkVersion 30
+        minSdkVersion globalConfiguration.androidMinSdkVersion
+        targetSdkVersion globalConfiguration.androidTargetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -42,25 +44,31 @@ android {
 }
 
 dependencies {
+    def commonDependencies = rootProject.ext.common
+    def applicationDependencies = rootProject.ext.mainApplication
+    def testDependencies = rootProject.ext.unitTesting
+
     implementation project(":core")
+    implementation project(":framework")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation commonDependencies.kotlinStdLib
+
+    implementation applicationDependencies.coreKtx
+    implementation applicationDependencies.appcompat
+    implementation applicationDependencies.material
+    implementation applicationDependencies.constraintLayout
+    implementation applicationDependencies.navigationFragmentKtx
+    implementation applicationDependencies.navigationUiKtx
+    implementation applicationDependencies.legacySupport
+    implementation applicationDependencies.fragmentKtx
+    implementation applicationDependencies.lifecycleLiveDataKtx
+    implementation applicationDependencies.lifecycleViewModelKtx
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    implementation 'androidx.fragment:fragment-ktx:1.3.2'
 
-    implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+    implementation applicationDependencies.materialCalendarView
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    testImplementation testDependencies.junit
+    androidTestImplementation testDependencies.androidXJunit
+    androidTestImplementation testDependencies.espressoCore
+    androidTestImplementation testDependencies.navigationTesting
 }
