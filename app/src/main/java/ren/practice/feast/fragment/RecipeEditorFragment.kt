@@ -30,7 +30,7 @@ class RecipeEditorFragment : Fragment() {
     ): View {
         _binding = FragmentRecipeEditorBinding.inflate(inflater, container, false)
 
-        binding.recipeEditorViewModel = viewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.recyclerIngredients.adapter =
@@ -84,11 +84,11 @@ class RecipeEditorFragment : Fragment() {
         val recipe = Recipe(
             1,
             binding.editRecipeName.text.toString(),
-            viewModel.ingredients.value!!,
+            viewModel.ingredients.value!!, // TODO handle in viewmodel
             viewModel.descriptionList.value!!
         )
         viewModel.submitRecipe(recipe)
-        val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(recipe)
+        val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(recipe.id)
         binding.root.findNavController().navigate(action)
     }
 }

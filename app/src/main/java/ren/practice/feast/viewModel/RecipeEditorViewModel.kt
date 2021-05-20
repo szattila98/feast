@@ -1,5 +1,6 @@
 package ren.practice.feast.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ren.practice.core.domain.Description
@@ -10,11 +11,11 @@ import ren.practice.feast.data.DataSource
 class RecipeEditorViewModel : ViewModel() {
 
     private var _ingredients = MutableLiveData(mutableListOf<Ingredient>())
-    val ingredients: MutableLiveData<MutableList<Ingredient>>
+    val ingredients: LiveData<MutableList<Ingredient>>
         get() = _ingredients
 
     private var _descriptionList = MutableLiveData(mutableListOf<Description>())
-    val descriptionList: MutableLiveData<MutableList<Description>>
+    val descriptionList: LiveData<MutableList<Description>>
         get() = _descriptionList
 
     fun addIngredient(ingredient: Ingredient) {

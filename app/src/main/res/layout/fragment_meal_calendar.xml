@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="ren.practice.feast.viewModel.MealCalendarViewModel" />
     </data>
 
     <LinearLayout
@@ -12,7 +15,7 @@
         android:layout_height="match_parent"
         android:padding="16dp"
         android:orientation="vertical"
-        tools:context=".fragment.HomeFragment">
+        tools:context=".fragment.MealCalendarFragment">
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendar_week"

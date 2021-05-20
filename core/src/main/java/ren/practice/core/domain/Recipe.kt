@@ -1,6 +1,5 @@
 package ren.practice.core.domain
 
-import java.io.Serializable
 import java.time.LocalDate
 
 data class Recipe(
@@ -9,4 +8,4 @@ data class Recipe(
     val ingredients: MutableList<Ingredient> = mutableListOf(),
     val description: MutableList<Description> = mutableListOf(),
     val created: LocalDate = LocalDate.now()
-) : Serializable
+)

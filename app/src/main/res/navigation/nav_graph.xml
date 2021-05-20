@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="ren.practice.feast.fragment.HomeFragment"
+        android:name="ren.practice.feast.fragment.MealCalendarFragment"
         android:label="@string/home_fragment"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/fragment_meal_calendar">
         <action
             android:id="@+id/action_homeFragment_to_newRecipe"
             app:destination="@id/newRecipe" />
@@ -44,7 +44,7 @@
         android:label="@string/recipe_details_fragment"
         tools:layout="@layout/fragment_recipe_details">
         <argument
-            android:name="recipe"
-            app:argType="ren.practice.core.domain.Recipe" />
+            android:name="recipeId"
+            app:argType="long" />
     </fragment>
 </navigation>

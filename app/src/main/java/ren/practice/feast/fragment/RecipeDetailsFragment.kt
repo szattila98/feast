@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
 import ren.practice.feast.databinding.FragmentRecipeDetailsBinding
+import ren.practice.feast.viewModel.RecipeDetailsViewModel
 
 class RecipeDetailsFragment : Fragment() {
 
     private var _binding: FragmentRecipeDetailsBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: RecipeDetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,14 +25,20 @@ class RecipeDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentRecipeDetailsBinding.inflate(inflater, container, false)
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         arguments?.let {
-            val recipe = RecipeDetailsFragmentArgs.fromBundle(it).recipe
-            binding.textRecipeDetailsName.text = recipe.name
-            binding.textRecipeDetailsCreated.text = recipe.created.toString()
+            val recipeId = RecipeDetailsFragmentArgs.fromBundle(it).recipeId
+            viewModel.loadRecipe(recipeId)
+        }
+        viewModel.recipe.value?.let {
+            binding.textRecipeDetailsName.text = it.name
+            binding.textRecipeDetailsCreated.text = it.created.toString()
             binding.recyclerRecipeDetailsIngredients.adapter =
-                IngredientAdapter(recipe.ingredients)
+                IngredientAdapter(it.ingredients)
             binding.recyclerRecipeDetailsDescriptions.adapter =
-                DescriptionAdapter(recipe.description)
+                DescriptionAdapter(it.description)
         }
 
         return binding.root

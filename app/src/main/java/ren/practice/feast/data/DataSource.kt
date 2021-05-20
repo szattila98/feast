@@ -53,4 +53,8 @@ object DataSource {
             it.date.toLocalDate().isEqual(date)
         }
     }
+
+    fun readRecipe(id: Long): Recipe {
+        return recipes.find { it.id == id }!!
+    }
 }

@@ -3,25 +3,26 @@ package ren.practice.feast.fragment
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
-import ren.practice.core.domain.Meal
 import ren.practice.feast.R
 import ren.practice.feast.adapter.MealAdapter
 import ren.practice.feast.data.DataSource
-import ren.practice.feast.databinding.FragmentHomeBinding
+import ren.practice.feast.databinding.FragmentMealCalendarBinding
+import ren.practice.feast.viewModel.MealCalendarViewModel
 import java.time.LocalDate
 
 
-class HomeFragment : Fragment() {
+class MealCalendarFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentMealCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private val meals: MutableList<Meal> = mutableListOf()
+    private val viewModel: MealCalendarViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -33,10 +34,16 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentMealCalendarBinding.inflate(inflater, container, false)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         initCalendar()
         addCalendarDots()
         initRecycler()
+
+
         return binding.root
     }
 
@@ -52,12 +59,12 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.item_new_recipe -> {
-            val action = HomeFragmentDirections.actionHomeFragmentToNewRecipe()
+            val action = MealCalendarFragmentDirections.actionHomeFragmentToNewRecipe()
             binding.root.findNavController().navigate(action)
             true
         }
         R.id.item_recipe_list -> {
-            val action = HomeFragmentDirections.actionHomeFragmentToRecipeListFragment()
+            val action = MealCalendarFragmentDirections.actionHomeFragmentToRecipeListFragment()
             binding.root.findNavController().navigate(action)
             true
         }
@@ -73,8 +80,8 @@ class HomeFragment : Fragment() {
             .setMaximumDate(getCalendarDay(currentDate.plusDays((plusDaysMax).toLong())))
             .commit()
         binding.calendarWeek.selectedDate = CalendarDay.today()
-        binding.calendarWeek.setOnDateChangedListener { _, date, _ ->
-            loadMeals(DataSource.readRelevantMeals(LocalDate.of(date.year, date.month, date.day)))
+        binding.calendarWeek.setOnDateChangedListener { _, day, _ ->
+            viewModel.readRelevantMeals(LocalDate.of(day.year, day.month, day.day))
             binding.recyclerMeals.adapter?.notifyDataSetChanged()
         }
     }
@@ -94,19 +101,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        loadMeals(DataSource.readRelevantMeals(LocalDate.now()))
-        binding.recyclerMeals.adapter = MealAdapter(meals) { meal ->
-            meal.recipe?.let {
-                val action = HomeFragmentDirections
-                    .actionHomeFragmentToRecipeDetailsFragment(it)
-                binding.root.findNavController().navigate(action)
+        viewModel.readRelevantMeals(LocalDate.now())
+        binding.recyclerMeals.adapter = viewModel.meals.value?.let { meals ->
+            MealAdapter(meals) { meal ->
+                meal.recipe?.let {
+                    val action = MealCalendarFragmentDirections
+                        .actionHomeFragmentToRecipeDetailsFragment(it.id)
+                    binding.root.findNavController().navigate(action)
+                }
             }
         }
-    }
-
-    private fun loadMeals(newMeals: List<Meal>) {
-        meals.clear()
-        meals.addAll(newMeals)
     }
 
     class EventDecorator(private val color: Int, private val dates: Set<CalendarDay>) : DayViewDecorator {
