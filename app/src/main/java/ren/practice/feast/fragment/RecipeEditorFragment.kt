@@ -82,7 +82,7 @@ class RecipeEditorFragment : Fragment() {
 
     private fun submitRecipe() {
         val recipe = Recipe(
-            1,
+            (1L..1000L).random(),
             binding.editRecipeName.text.toString(),
             viewModel.ingredients.value!!, // TODO handle in viewmodel
             viewModel.descriptionList.value!!

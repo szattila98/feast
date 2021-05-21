@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homeFragment_to_recipeDetailsFragment"
             app:destination="@id/recipeDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mealEditorFragment"
+            app:destination="@id/mealEditorFragment" />
     </fragment>
     <fragment
         android:id="@+id/newRecipe"
@@ -46,5 +49,17 @@
         <argument
             android:name="recipeId"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealEditorFragment"
+        android:name="ren.practice.feast.fragment.MealEditorFragment"
+        android:label="MealEditorFragment"
+        tools:layout="@layout/fragment_meal_editor">
+        <action
+            android:id="@+id/action_mealEditorFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="selectedDate"
+            app:argType="java.time.LocalDate" />
     </fragment>
 </navigation>

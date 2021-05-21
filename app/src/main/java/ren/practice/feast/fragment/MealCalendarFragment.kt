@@ -42,7 +42,13 @@ class MealCalendarFragment : Fragment() {
         initCalendar()
         addCalendarDots()
         initRecycler()
-
+        binding.fabNewMeal.setOnClickListener {
+            val selectedDate = binding.calendarWeek.selectedDate!!
+            val action = MealCalendarFragmentDirections.actionHomeFragmentToMealEditorFragment(
+                LocalDate.of(selectedDate.year, selectedDate.month, selectedDate.day)
+            )
+            binding.root.findNavController().navigate(action)
+        }
 
         return binding.root
     }

@@ -23,6 +23,29 @@ object DataSource {
             )
         )
 
+    private val meals = mutableListOf<Meal>()
+
+    init {
+        val date1 = LocalDateTime.now()
+        val date2 = LocalDateTime.now().plusDays(1)
+        val date3 = LocalDateTime.now().plusDays(2)
+        val date4 = LocalDateTime.now().plusDays(3)
+        val date6 = LocalDateTime.now().plusDays(5)
+        val date7 = LocalDateTime.now().plusDays(6)
+
+        meals.addAll(
+            listOf(
+                Meal(1, date1, "Kaja1", 1),
+                Meal(2, date1, "Kaja1alt"),
+                Meal(3, date2, "Kaja1", 1),
+                Meal(4, date3, "Kaja1", 1),
+                Meal(5, date4, "Kaja1", 1),
+                Meal(6, date6, "Kaja1", 1),
+                Meal(7, date7, "Kaja1", 1),
+            )
+        )
+    }
+
     fun getRecipes(): List<Recipe> {
         return recipes
     }
@@ -32,22 +55,7 @@ object DataSource {
     }
 
     fun readMeals(): List<Meal> {
-        val date1 = LocalDateTime.now()
-        val date2 = LocalDateTime.now().plusDays(1)
-        val date3 = LocalDateTime.now().plusDays(2)
-        val date4 = LocalDateTime.now().plusDays(3)
-        val date6 = LocalDateTime.now().plusDays(5)
-        val date7 = LocalDateTime.now().plusDays(6)
-
-        return listOf(
-            Meal(1, date1, "Kaja1", 1),
-            Meal(2, date1, "Kaja1alt"),
-            Meal(3, date2, "Kaja1", 1),
-            Meal(4, date3, "Kaja1", 1),
-            Meal(5, date4, "Kaja1", 1),
-            Meal(6, date6, "Kaja1", 1),
-            Meal(7, date7, "Kaja1", 1),
-        )
+        return meals
     }
 
     fun readRelevantMeals(date: LocalDate): List<Meal> {
@@ -58,5 +66,9 @@ object DataSource {
 
     fun readRecipe(id: Long): Recipe {
         return recipes.find { it.id == id }!!
+    }
+
+    fun saveMeal(meal: Meal) {
+        meals.add(meal)
     }
 }
