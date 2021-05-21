@@ -10,7 +10,18 @@ import java.time.LocalDateTime
 object DataSource {
 
     private val recipes: MutableList<Recipe> =
-        mutableListOf(Recipe(1, "Recipe", mutableListOf(), mutableListOf()))
+        mutableListOf(
+            Recipe(
+                1,
+                "Test Recept Név",
+                mutableListOf(
+                    Ingredient("Hozzávaló", "12", "kg")
+                ),
+                mutableListOf(
+                    Description("Tedd bele a tejet!")
+                )
+            )
+        )
 
     fun getRecipes(): List<Recipe> {
         return recipes
@@ -28,23 +39,14 @@ object DataSource {
         val date6 = LocalDateTime.now().plusDays(5)
         val date7 = LocalDateTime.now().plusDays(6)
 
-        val recipe = Recipe(
-            1,
-            "Recept",
-            mutableListOf(Ingredient("Hozzávaló", "12", "kg")),
-            mutableListOf(
-                Description("Tedd bele a tejet!")
-            )
-        )
-
         return listOf(
-            Meal(1, date1, "Kaja1", recipe),
+            Meal(1, date1, "Kaja1", 1),
             Meal(2, date1, "Kaja1alt"),
-            Meal(3, date2, "Kaja1", recipe),
-            Meal(4, date3, "Kaja1", recipe),
-            Meal(5, date4, "Kaja1", recipe),
-            Meal(6, date6, "Kaja1", recipe),
-            Meal(7, date7, "Kaja1", recipe),
+            Meal(3, date2, "Kaja1", 1),
+            Meal(4, date3, "Kaja1", 1),
+            Meal(5, date4, "Kaja1", 1),
+            Meal(6, date6, "Kaja1", 1),
+            Meal(7, date7, "Kaja1", 1),
         )
     }
 

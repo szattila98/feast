@@ -36,7 +36,7 @@ class MealAdapter(
         fun bind(meal: Meal) {
             binding.item = meal
             binding.time = meal.date.toLocalTime().toString()
-            if (meal.recipe == null) binding.buttonMealRecipe.visibility = View.GONE
+            if (meal.recipeId == null) binding.buttonMealRecipe.visibility = View.GONE
         }
     }
 }

@@ -104,9 +104,9 @@ class MealCalendarFragment : Fragment() {
         viewModel.readRelevantMeals(LocalDate.now())
         binding.recyclerMeals.adapter = viewModel.meals.value?.let { meals ->
             MealAdapter(meals) { meal ->
-                meal.recipe?.let {
+                meal.recipeId?.let {
                     val action = MealCalendarFragmentDirections
-                        .actionHomeFragmentToRecipeDetailsFragment(it.id)
+                        .actionHomeFragmentToRecipeDetailsFragment(it)
                     binding.root.findNavController().navigate(action)
                 }
             }
