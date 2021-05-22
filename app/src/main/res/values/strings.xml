@@ -27,6 +27,10 @@
     <string name="description_record_list_item">%s. %s</string>
     <!--Item Meal Record-->
     <string name="recipe_btn">Recipe</string>
+    <string name="meal_menu_title">Update Meal</string>
+    <string name="meal_menu_edit">Edit Meal</string>
+    <string name="meal_menu_delete">Delete Meal</string>
+    <string name="meal_menu_cancel">Cancel</string>
     <!--Meal Editor Dialog-->
     <string name="meal_dialog_title">New Recipe</string>
     <string name="meal_dialog_name">Name of the meal</string>

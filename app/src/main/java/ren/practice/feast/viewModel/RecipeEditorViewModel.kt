@@ -26,7 +26,7 @@ class RecipeEditorViewModel : ViewModel() {
         _descriptionList.value?.add(description)
     }
 
-    fun submitRecipe(recipe: Recipe) {
-        DataSource.saveRecipe(recipe)
+    fun submitRecipe(recipe: Recipe): Long {
+        return DataSource.saveRecipe(recipe)
     }
 }

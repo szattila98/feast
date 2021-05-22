@@ -23,13 +23,24 @@ class MealEditorViewModel : ViewModel() {
     private var _time = MutableLiveData<LocalTime>()
     val time: MutableLiveData<LocalTime> get() = _time
 
-    private var _newMealName = MutableLiveData("")
-    val newMealName: MutableLiveData<String> get() = _newMealName
+    private var _mealName = MutableLiveData("")
+    val mealName: MutableLiveData<String> get() = _mealName
 
     private var _chosenRecipeId = MutableLiveData<Long?>(null)
 
+    private var _mealId = MutableLiveData(0L)
+    var mealId: Long?
+        get() = _mealId.value
+        set(value) {
+            _mealId.value = value
+        }
+
     init {
         _recipes.value = DataSource.getRecipes()
+    }
+
+    fun setMealName(name: String) {
+        _mealName.value = name
     }
 
     fun setDate(date: LocalDate) {
@@ -50,10 +61,21 @@ class MealEditorViewModel : ViewModel() {
         _chosenRecipeId.value?.let { _chosenRecipe.value = DataSource.readRecipe(it) }
     }
 
-    fun saveMeal(): Boolean {
+    fun saveMeal(): Boolean { // TODO validation
         val dateTime = LocalDateTime.of(_date.value, _time.value)
-        val meal = Meal(name = _newMealName.value!!, recipeId = _chosenRecipeId.value, date = dateTime)
+        val meal = Meal(mealId!!, dateTime, _mealName.value!!, _chosenRecipeId.value)
         DataSource.saveMeal(meal)
         return true
     }
+
+    fun setRecipeDetailsToEdit() {
+        val meal = DataSource.readMeal(mealId!!)
+        setMealName(meal.name)
+        setDate(meal.date.toLocalDate())
+        setTime(meal.date.toLocalTime())
+        meal.recipeId?.let {
+            setChosenRecipeId(it)
+        }
+    }
+
 }

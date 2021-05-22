@@ -60,6 +60,12 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="selectedDate"
-            app:argType="java.time.LocalDate" />
+            android:defaultValue="@null"
+            app:argType="java.time.LocalDate"
+            app:nullable="true" />
+        <argument
+            android:name="mealId"
+            android:defaultValue="0L"
+            app:argType="long" />
     </fragment>
 </navigation>

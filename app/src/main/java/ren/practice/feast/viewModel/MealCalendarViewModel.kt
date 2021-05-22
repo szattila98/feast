@@ -9,16 +9,31 @@ import java.time.LocalDate
 
 class MealCalendarViewModel : ViewModel() {
 
-    private var _meals = MutableLiveData(mutableListOf<Meal>())
-    val meals: LiveData<MutableList<Meal>>
-        get() = _meals
+    private var _relevantMeals = MutableLiveData(mutableListOf<Meal>())
+    val relevantMeals get() = _relevantMeals
 
-    fun readRelevantMeals(date: LocalDate) {
-        loadMeals(DataSource.readRelevantMeals(date))
+    private var _currentDate = MutableLiveData(LocalDate.now())
+    val currentDate: LiveData<LocalDate> get() = _currentDate
+
+    fun readEveryMeal() = DataSource.readMeals()
+
+    fun setCurrentDate(date: LocalDate) {
+        _currentDate.value = date
+    }
+
+    fun readRelevantMeals() {
+        _currentDate.value?.let {
+            loadMeals(DataSource.readRelevantMeals(it))
+        }
     }
 
     private fun loadMeals(meals: List<Meal>) {
-        _meals.value?.clear()
-        _meals.value?.addAll(meals)
+        _relevantMeals.value?.clear()
+        _relevantMeals.value?.addAll(meals)
+    }
+
+    fun deleteMeal(id: Long) {
+        DataSource.deleteMeal(id)
+        readRelevantMeals()
     }
 }

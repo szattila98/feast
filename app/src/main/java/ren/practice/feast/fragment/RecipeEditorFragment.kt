@@ -82,13 +82,12 @@ class RecipeEditorFragment : Fragment() {
 
     private fun submitRecipe() {
         val recipe = Recipe(
-            (1L..1000L).random(),
-            binding.editRecipeName.text.toString(),
-            viewModel.ingredients.value!!, // TODO handle in viewmodel
-            viewModel.descriptionList.value!!
+            name = binding.editRecipeName.text.toString(),
+            ingredients = viewModel.ingredients.value!!, // TODO handle in viewmodel
+            description = viewModel.descriptionList.value!!
         )
-        viewModel.submitRecipe(recipe)
-        val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(recipe.id)
+        val recipeId = viewModel.submitRecipe(recipe)
+        val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(recipeId)
         binding.root.findNavController().navigate(action)
     }
 }

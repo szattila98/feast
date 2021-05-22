@@ -30,8 +30,14 @@ class MealEditorFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         arguments?.let {
-            val selectedDate = MealEditorFragmentArgs.fromBundle(it).selectedDate
-            viewModel.setDate(selectedDate)
+            MealEditorFragmentArgs.fromBundle(it).selectedDate?.let { selectedDate ->
+                viewModel.setDate(selectedDate)
+            }
+            val mealId = MealEditorFragmentArgs.fromBundle(it).mealId
+            if (mealId != 0L) {
+                viewModel.mealId = MealEditorFragmentArgs.fromBundle(it).mealId
+                viewModel.setRecipeDetailsToEdit()
+            }
         }
         binding.recyclerRecipes.adapter =
             viewModel.recipes.value?.let { recipes ->

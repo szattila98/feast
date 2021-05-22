@@ -1,5 +1,6 @@
 package ren.practice.feast.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -11,7 +12,6 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import ren.practice.feast.R
 import ren.practice.feast.adapter.MealAdapter
-import ren.practice.feast.data.DataSource
 import ren.practice.feast.databinding.FragmentMealCalendarBinding
 import ren.practice.feast.viewModel.MealCalendarViewModel
 import java.time.LocalDate
@@ -40,13 +40,14 @@ class MealCalendarFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         initCalendar()
-        addCalendarDots()
+        updateCalendarDots()
         initRecycler()
         binding.fabNewMeal.setOnClickListener {
             val selectedDate = binding.calendarWeek.selectedDate!!
-            val action = MealCalendarFragmentDirections.actionHomeFragmentToMealEditorFragment(
-                LocalDate.of(selectedDate.year, selectedDate.month, selectedDate.day)
-            )
+            val action = MealCalendarFragmentDirections
+                .actionHomeFragmentToMealEditorFragment(
+                    LocalDate.of(selectedDate.year, selectedDate.month, selectedDate.day)
+                )
             binding.root.findNavController().navigate(action)
         }
 
@@ -78,27 +79,30 @@ class MealCalendarFragment : Fragment() {
     }
 
     private fun initCalendar() {
-        val currentDate = LocalDate.now()
-        val plusDaysMin = 7 + currentDate.dayOfWeek.value - 1
-        val plusDaysMax = 7 + (7 - currentDate.dayOfWeek.value)
-        binding.calendarWeek.state().edit()
-            .setMinimumDate(getCalendarDay(currentDate.plusDays((-plusDaysMin).toLong())))
-            .setMaximumDate(getCalendarDay(currentDate.plusDays((plusDaysMax).toLong())))
-            .commit()
-        binding.calendarWeek.selectedDate = CalendarDay.today()
-        binding.calendarWeek.setOnDateChangedListener { _, day, _ ->
-            viewModel.readRelevantMeals(LocalDate.of(day.year, day.month, day.day))
-            binding.recyclerMeals.adapter?.notifyDataSetChanged()
+        viewModel.currentDate.value?.let { currentDate ->
+            val plusDaysMin = 7 + currentDate.dayOfWeek.value - 1
+            val plusDaysMax = 7 + (7 - currentDate.dayOfWeek.value)
+            binding.calendarWeek.state().edit()
+                .setMinimumDate(getCalendarDay(currentDate.plusDays((-plusDaysMin).toLong())))
+                .setMaximumDate(getCalendarDay(currentDate.plusDays((plusDaysMax).toLong())))
+                .commit()
+            binding.calendarWeek.selectedDate = CalendarDay.from(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth)
+            binding.calendarWeek.setOnDateChangedListener { _, day, _ ->
+                viewModel.setCurrentDate(LocalDate.of(day.year, day.month, day.day))
+                viewModel.readRelevantMeals()
+                binding.recyclerMeals.adapter?.notifyDataSetChanged()
+            }
         }
     }
 
-    private fun addCalendarDots() {
-        val meals = DataSource.readMeals()
+    private fun updateCalendarDots() {
+        val meals = viewModel.readEveryMeal()
         val dates: MutableSet<CalendarDay> = mutableSetOf()
         for (meal in meals) {
             val date = meal.date.toLocalDate()
             dates.add(getCalendarDay(date))
         }
+        binding.calendarWeek.removeDecorators()
         binding.calendarWeek.addDecorator(EventDecorator(resources.getColor(R.color.red, context?.theme), dates))
     }
 
@@ -107,16 +111,45 @@ class MealCalendarFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        viewModel.readRelevantMeals(LocalDate.now())
-        binding.recyclerMeals.adapter = viewModel.meals.value?.let { meals ->
-            MealAdapter(meals) { meal ->
-                meal.recipeId?.let {
-                    val action = MealCalendarFragmentDirections
-                        .actionHomeFragmentToRecipeDetailsFragment(it)
-                    binding.root.findNavController().navigate(action)
+        viewModel.readRelevantMeals()
+        binding.recyclerMeals.adapter = viewModel.relevantMeals.value?.let { meals ->
+            MealAdapter(
+                meals,
+                clickListener = { meal ->
+                    meal.recipeId?.let {
+                        val action = MealCalendarFragmentDirections
+                            .actionHomeFragmentToRecipeDetailsFragment(it)
+                        binding.root.findNavController().navigate(action)
+                    }
+                },
+                longClickListener = {
+                    showMenuDialog(it.id)
                 }
-            }
+            )
         }
+    }
+
+    private fun showMenuDialog(mealId: Long) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.meal_menu_title)
+            .setPositiveButton(R.string.meal_menu_edit) { dialog, _ ->
+                dialog.dismiss()
+                val action = MealCalendarFragmentDirections
+                    .actionHomeFragmentToMealEditorFragment(mealId = mealId)
+                binding.root.findNavController().navigate(action)
+                viewModel.readRelevantMeals()
+                binding.recyclerMeals.adapter?.notifyDataSetChanged()
+            }
+            .setNegativeButton(R.string.meal_menu_delete) { dialog, _ ->
+                dialog.dismiss()
+                viewModel.deleteMeal(mealId)
+                binding.recyclerMeals.adapter?.notifyDataSetChanged()
+                updateCalendarDots()
+            }
+            .setNeutralButton(R.string.meal_menu_cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     class EventDecorator(private val color: Int, private val dates: Set<CalendarDay>) : DayViewDecorator {

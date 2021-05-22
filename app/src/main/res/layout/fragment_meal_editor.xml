@@ -34,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:inputType="text"
                 android:maxLength="30"
-                android:text="@={viewModel.newMealName}" />
+                android:text="@={viewModel.mealName}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
