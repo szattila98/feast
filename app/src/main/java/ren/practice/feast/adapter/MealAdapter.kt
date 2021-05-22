@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ren.practice.core.domain.Meal
+import ren.practice.feast.R
 import ren.practice.feast.databinding.ItemMealRecordBinding
 
 class MealAdapter(
@@ -38,6 +39,9 @@ class MealAdapter(
         fun bind(meal: Meal) {
             binding.item = meal
             binding.time = meal.date.toLocalTime().toString()
+            meal.recipeId?.let {
+                binding.textMealTime.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_recipe, 0, 0, 0)
+            }
         }
     }
 }

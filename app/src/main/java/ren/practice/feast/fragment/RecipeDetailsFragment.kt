@@ -1,11 +1,10 @@
 package ren.practice.feast.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import ren.practice.feast.R
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
 import ren.practice.feast.databinding.FragmentRecipeDetailsBinding
@@ -17,6 +16,11 @@ class RecipeDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: RecipeDetailsViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,5 +51,10 @@ class RecipeDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_recipe_details, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }

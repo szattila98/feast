@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Feast</string>
     <!--Home fragment-->
-    <string name="home_fragment">Home</string>
+    <string name="meal_calendar_fragment">Meal Calendar</string>
     <string name="welcome_home">Welcome guy!</string>
     <string name="meal_name">%d. %s</string>
     <!--Home menu-->
-    <string name="item_add_recipe">Add Recipe</string>
-    <string name="item_recipe_list">Recipe List</string>
+    <string name="menu_item_add_recipe">Add Recipe</string>
+    <string name="menu_item_recipe_list">Recipe List</string>
     <!--New Recipe fragment-->
     <string name="new_recipe_fragment">New Recipe</string>
     <string name="name_of_new_recipe">Name of the recipe</string>
@@ -37,4 +37,6 @@
     <string name="meal_dialog_save">Save</string>
     <string name="meal_dialog_cancel">Cancel</string>
     <string name="save_meal">Save Meal</string>
+    <string name="menu_item_delete_recipe">Delete Recipe</string>
+    <string name="menu_item_edit_recipe">Edit Recipe</string>
 </resources>
