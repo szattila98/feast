@@ -1,46 +1,40 @@
 <resources>
     <string name="app_name">Feast</string>
     <!--Home fragment-->
-    <string name="home_fragment">Meal Calendar</string>
-    <string name="welcome_home">Welcome guy!</string>
+    <string name="home_fragment_label">Meal Calendar</string>
     <string name="meal_name">%d. %s</string>
-    <!--Home menu-->
     <string name="menu_item_add_recipe">Add Recipe</string>
     <string name="menu_item_recipe_list">Recipe List</string>
     <!--New Recipe fragment-->
     <string name="recipe_editor_fragment">Recipe Editor</string>
-    <string name="name_of_new_recipe">Name of the recipe</string>
+    <string name="name_of_new_recipe">Name of the Recipe</string>
     <string name="ingredients">Ingredients</string>
     <string name="add_ingredient">Add Ingredient</string>
     <string name="description">Descriptions</string>
-    <string name="add_description">Add Descriptions</string>
+    <string name="add_description">Add Description</string>
     <string name="hint_ingredient">Ingredient</string>
     <string name="hint_amount">Amount</string>
     <string name="hint_unit">Unit</string>
     <string name="hint_number">Number</string>
-    <string name="hint_desc_text">Text</string>
+    <string name="hint_desc_text">Description text</string>
     <!--Recipe List Fragment-->
     <string name="recipe_list_fragment">Recipe List</string>
     <!--Recipe Details Fragment-->
-    <string name="recipe_details_fragment">Recipe Details</string>
-    <string name="recipe_details_delete_dialog_title">Do you want to delete this Recipe?</string>
-    <string name="recipe_details_delete_dialog_toast">Recipe cannot be deleted, it is still related to one or more meals!</string>
-    <string name="recipe_details_dialog_delete">Delete</string>
-    <string name="recipe_details_dialog_cancel">Cancel</string>
+    <string name="recipe_details_fragment_label">Recipe Details</string>
+    <string name="delete_dialog_title">Do you want to delete this Recipe?</string>
+    <string name="delete_dialog_toast">Recipe cannot be deleted, it is still related to one or more meals!</string>
+    <string name="delete_dialog_delete_option">Delete</string>
+    <string name="delete_dialog_cancel_option">Cancel</string>
     <!--Item Description Record-->
     <string name="description_record_list_item">%s. %s</string>
     <!--Item Meal Record-->
-    <string name="recipe_btn">Recipe</string>
-    <string name="meal_menu_title">Update Meal</string>
-    <string name="meal_menu_edit">Edit Meal</string>
-    <string name="meal_menu_delete">Delete Meal</string>
-    <string name="meal_menu_cancel">Cancel</string>
+    <string name="meal_dialog_title">Update Meal</string>
+    <string name="meal_dialog_edit_btn">Edit Meal</string>
+    <string name="meal_dialog_delete_btn">Delete Meal</string>
+    <string name="meal_dialog_cancel_btn">Cancel</string>
     <!--Meal Editor Dialog-->
-    <string name="meal_dialog_title">New Recipe</string>
-    <string name="meal_dialog_name">Name of the meal</string>
-    <string name="meal_dialog_save">Save</string>
-    <string name="meal_dialog_cancel">Cancel</string>
-    <string name="save_meal">Save Meal</string>
+    <string name="meal_name_hint">Name of the meal</string>
+    <string name="save_meal_btn">Save Meal</string>
     <string name="menu_item_delete_recipe">Delete Recipe</string>
     <string name="menu_item_edit_recipe">Edit Recipe</string>
 </resources>

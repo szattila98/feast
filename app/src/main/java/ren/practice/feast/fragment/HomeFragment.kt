@@ -131,8 +131,8 @@ class HomeFragment : Fragment() {
 
     private fun showMenuDialog(mealId: Long) {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.meal_menu_title)
-            .setPositiveButton(R.string.meal_menu_edit) { dialog, _ ->
+            .setTitle(R.string.meal_dialog_title)
+            .setPositiveButton(R.string.meal_dialog_edit_btn) { dialog, _ ->
                 dialog.dismiss()
                 val action = HomeFragmentDirections
                     .actionHomeFragmentToMealEditorFragment(mealId = mealId)
@@ -140,13 +140,13 @@ class HomeFragment : Fragment() {
                 viewModel.readRelevantMeals()
                 binding.recyclerMeals.adapter?.notifyDataSetChanged()
             }
-            .setNegativeButton(R.string.meal_menu_delete) { dialog, _ ->
+            .setNegativeButton(R.string.meal_dialog_delete_btn) { dialog, _ ->
                 dialog.dismiss()
                 viewModel.deleteMeal(mealId)
                 binding.recyclerMeals.adapter?.notifyDataSetChanged()
                 updateCalendarDots()
             }
-            .setNeutralButton(R.string.meal_menu_cancel) { dialog, _ ->
+            .setNeutralButton(R.string.meal_dialog_cancel_btn) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()

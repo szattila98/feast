@@ -9,10 +9,6 @@
             type="ren.practice.core.domain.Ingredient" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,6 +42,4 @@
                 tools:text="kg" />
 
         </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
 </layout>

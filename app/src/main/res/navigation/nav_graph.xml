@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mealCalendarFragment"
         android:name="ren.practice.feast.fragment.HomeFragment"
-        android:label="@string/home_fragment"
+        android:label="@string/home_fragment_label"
         tools:layout="@layout/fragment_meal_calendar">
         <action
             android:id="@+id/action_homeFragment_to_newRecipe"
@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/recipeDetailsFragment"
         android:name="ren.practice.feast.fragment.RecipeDetailsFragment"
-        android:label="@string/recipe_details_fragment"
+        android:label="@string/recipe_details_fragment_label"
         tools:layout="@layout/fragment_recipe_details">
         <argument
             android:name="recipeId"

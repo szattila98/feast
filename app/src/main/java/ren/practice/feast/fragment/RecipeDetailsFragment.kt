@@ -71,18 +71,18 @@ class RecipeDetailsFragment : Fragment() {
         }
         R.id.menu_item_delete_recipe -> {
             AlertDialog.Builder(requireContext())
-                .setTitle(R.string.recipe_details_delete_dialog_title)
-                .setPositiveButton(R.string.recipe_details_dialog_delete) { dialog, _ ->
+                .setTitle(R.string.delete_dialog_title)
+                .setPositiveButton(R.string.delete_dialog_delete_option) { dialog, _ ->
                     dialog.dismiss()
                     val success = viewModel.deleteRecipe()
                     if (success) {
                         val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToRecipeListFragment()
                         findNavController().navigate(action)
                     } else {
-                        Toast.makeText(requireContext(), R.string.recipe_details_delete_dialog_toast, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), R.string.delete_dialog_toast, Toast.LENGTH_SHORT).show()
                     }
                 }
-                .setNegativeButton(R.string.recipe_details_dialog_cancel) { dialog, _ ->
+                .setNegativeButton(R.string.delete_dialog_cancel_option) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .show()

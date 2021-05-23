@@ -63,7 +63,6 @@ dependencies {
     implementation applicationDependencies.fragmentKtx
     implementation applicationDependencies.lifecycleLiveDataKtx
     implementation applicationDependencies.lifecycleViewModelKtx
-    implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation applicationDependencies.materialCalendarView
 
