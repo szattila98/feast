@@ -68,7 +68,7 @@ class MealEditorViewModel : ViewModel() {
         return true
     }
 
-    fun setRecipeDetailsToEdit() {
+    fun setMealDetailsToEdit() {
         val meal = DataSource.readMeal(mealId!!)
         setMealName(meal.name)
         setDate(meal.date.toLocalDate())

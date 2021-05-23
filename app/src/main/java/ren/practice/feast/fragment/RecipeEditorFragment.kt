@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import ren.practice.core.domain.Description
 import ren.practice.core.domain.Ingredient
-import ren.practice.core.domain.Recipe
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
 import ren.practice.feast.databinding.FragmentRecipeEditorBinding
@@ -33,10 +32,28 @@ class RecipeEditorFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        arguments?.let {
+            val recipeId = RecipeEditorFragmentArgs.fromBundle(it).recipeId
+            if (recipeId != 0L) {
+                viewModel.recipeId = recipeId
+                viewModel.setRecipeDetailsToEdit()
+            }
+        }
+
         binding.recyclerIngredients.adapter =
-            viewModel.ingredients.value?.let { IngredientAdapter(it) }
+            viewModel.ingredients.value?.let {
+                IngredientAdapter(it) { ingredient ->
+                    viewModel.removeIngredient(ingredient)
+                    binding.recyclerIngredients.adapter?.notifyDataSetChanged()
+                }
+            }
         binding.recyclerDescriptions.adapter =
-            viewModel.descriptionList.value?.let { DescriptionAdapter(it) }
+            viewModel.descriptionList.value?.let {
+                DescriptionAdapter(it) { description ->
+                    viewModel.removeDescriptionRecord(description)
+                    binding.recyclerDescriptions.adapter?.notifyDataSetChanged()
+                }
+            }
 
         binding.buttonAddIngredient.setOnClickListener { addIngredient(); }
         binding.buttonAddDescription.setOnClickListener { addDescription(); }
@@ -81,12 +98,7 @@ class RecipeEditorFragment : Fragment() {
     }
 
     private fun submitRecipe() {
-        val recipe = Recipe(
-            name = binding.editRecipeName.text.toString(),
-            ingredients = viewModel.ingredients.value!!, // TODO handle in viewmodel
-            description = viewModel.descriptionList.value!!
-        )
-        val recipeId = viewModel.submitRecipe(recipe)
+        val recipeId = viewModel.submitRecipe()
         val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(recipeId)
         binding.root.findNavController().navigate(action)
     }

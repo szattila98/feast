@@ -51,9 +51,14 @@ object DataSource {
     }
 
     fun saveRecipe(recipe: Recipe): Long {
-        val recipe = Recipe((1L..1000L).random(), recipe.name, recipe.ingredients, recipe.description, recipe.created)
-        recipes.add(recipe)
-        return recipe.id
+        if (recipe.id != 0L) {
+            deleteRecipe(recipe.id)
+            recipes.add(recipe)
+            return recipe.id
+        }
+        val newRecipe = Recipe((1L..1000L).random(), recipe.name, recipe.ingredients, recipe.description, recipe.created)
+        recipes.add(newRecipe)
+        return newRecipe.id
     }
 
     fun readMeals(): List<Meal> {

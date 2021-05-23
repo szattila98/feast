@@ -33,6 +33,10 @@
             app:destination="@id/recipeDetailsFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="recipeId"
+            android:defaultValue="0L"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/recipeListFragment"

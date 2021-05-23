@@ -43,9 +43,9 @@ class RecipeDetailsFragment : Fragment() {
             binding.textRecipeDetailsName.text = it.name
             binding.textRecipeDetailsCreated.text = it.created.toString()
             binding.recyclerRecipeDetailsIngredients.adapter =
-                IngredientAdapter(it.ingredients)
+                IngredientAdapter(it.ingredients) {}
             binding.recyclerRecipeDetailsDescriptions.adapter =
-                DescriptionAdapter(it.description)
+                DescriptionAdapter(it.description) {}
         }
 
         return binding.root
@@ -63,8 +63,10 @@ class RecipeDetailsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.menu_item_edit_recipe -> {
-            val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToNewRecipeFragment()
-            findNavController().navigate(action)
+            viewModel.recipe.value?.let {
+                val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToNewRecipeFragment(it.id)
+                findNavController().navigate(action)
+            }
             true
         }
         R.id.menu_item_delete_recipe -> {

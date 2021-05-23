@@ -35,8 +35,8 @@ class MealEditorFragment : Fragment() {
             }
             val mealId = MealEditorFragmentArgs.fromBundle(it).mealId
             if (mealId != 0L) {
-                viewModel.mealId = MealEditorFragmentArgs.fromBundle(it).mealId
-                viewModel.setRecipeDetailsToEdit()
+                viewModel.mealId = mealId
+                viewModel.setMealDetailsToEdit()
             }
         }
         binding.recyclerRecipes.adapter =
