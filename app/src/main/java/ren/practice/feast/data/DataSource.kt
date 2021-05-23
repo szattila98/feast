@@ -8,7 +8,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 object DataSource {
-
     private val recipes: MutableList<Recipe> =
         mutableListOf(
             Recipe(
@@ -61,6 +60,17 @@ object DataSource {
         return newRecipe.id
     }
 
+    fun deleteRecipe(id: Long) {
+        recipes.removeIf { it.id == id }
+    }
+
+    fun isRecipeUnrelatedToMeals(id: Long): Boolean {
+        for (meal in meals) {
+            if (meal.recipeId == id) return false
+        }
+        return true
+    }
+
     fun readMeals(): List<Meal> {
         return meals
     }
@@ -89,15 +99,4 @@ object DataSource {
     }
 
     fun readMeal(id: Long) = meals.find { it.id == id }!!
-
-    fun deleteRecipe(id: Long) {
-        recipes.removeIf { it.id == id }
-    }
-
-    fun isRecipeUnrelatedToMeals(id: Long): Boolean {
-        for (meal in meals) {
-            if (meal.recipeId == id) return false
-        }
-        return true
-    }
 }

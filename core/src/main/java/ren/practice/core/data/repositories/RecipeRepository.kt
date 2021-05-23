@@ -4,8 +4,9 @@ import ren.practice.core.data.RecipeDataSource
 import ren.practice.core.domain.Recipe
 
 class RecipeRepository(private val dataSource: RecipeDataSource) {
-
-    suspend fun saveRecipe(recipe: Recipe) = dataSource.saveRecipe(recipe)
-
-    suspend fun readRecipes() = dataSource.readRecipes()
+    suspend fun save(recipe: Recipe) = dataSource.save(recipe)
+    suspend fun findAll() = dataSource.findAll()
+    suspend fun findById(id: Long) = dataSource.findById(id)
+    suspend fun delete(id: Long) = dataSource.delete(id)
+    suspend fun isRecipeUnrelatedToMeals(id: Long) = dataSource.isRecipeUnrelatedToMeals(id)
 }

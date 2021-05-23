@@ -5,11 +5,9 @@ import ren.practice.core.domain.Meal
 import java.time.LocalDate
 
 class MealRepository(private val dataSource: MealDataSource) {
-
-    suspend fun saveMeal(meal: Meal) = dataSource.saveMeal(meal)
-
-    suspend fun readRelevantMeals(date: LocalDate) = dataSource.readMeals().filter {
-        it.date.toLocalDate().isEqual(date)
-    }
-
+    suspend fun save(meal: Meal) = dataSource.save(meal)
+    suspend fun findAll() = dataSource.findAll()
+    suspend fun findById(id: Long) = dataSource.findById(id)
+    suspend fun delete(id: Long) = dataSource.delete(id)
+    suspend fun findByDate(date: LocalDate) = dataSource.findByDate(date)
 }
