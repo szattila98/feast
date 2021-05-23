@@ -20,7 +20,7 @@ class MealEditorViewModel : ViewModel() {
     private var _date = MutableLiveData<LocalDate>()
     val date: MutableLiveData<LocalDate> get() = _date
 
-    private var _time = MutableLiveData<LocalTime>()
+    private var _time = MutableLiveData<LocalTime>(LocalTime.now().withSecond(0).withNano(0))
     val time: MutableLiveData<LocalTime> get() = _time
 
     private var _mealName = MutableLiveData("")

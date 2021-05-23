@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import ren.practice.core.domain.Description
-import ren.practice.core.domain.Ingredient
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
 import ren.practice.feast.databinding.FragmentRecipeEditorBinding
@@ -68,33 +65,13 @@ class RecipeEditorFragment : Fragment() {
     }
 
     private fun addIngredient() {
-        viewModel.addIngredient(
-            Ingredient(
-                binding.editIngredientName.text.toString(),
-                binding.editIngredientAmount.text.toString(),
-                binding.editIngredientUnit.text.toString()
-            )
-        )
+        viewModel.addIngredient()
         binding.recyclerIngredients.adapter?.notifyDataSetChanged()
-        clearEditTexts(
-            binding.editIngredientName,
-            binding.editIngredientAmount,
-            binding.editIngredientUnit
-        )
     }
 
     private fun addDescription() {
-        viewModel.addDescriptionRecord(
-            Description(binding.editDescriptionText.text.toString())
-        )
+        viewModel.addDescriptionRecord()
         binding.recyclerDescriptions.adapter?.notifyDataSetChanged()
-        clearEditTexts(binding.editDescriptionText)
-    }
-
-    private fun clearEditTexts(vararg editTexts: EditText) {
-        for (v in editTexts) {
-            v.text?.clear()
-        }
     }
 
     private fun submitRecipe() {

@@ -74,6 +74,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="text"
+                            android:text="@={viewModel.ingName}"
                             android:maxLength="15" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,6 +90,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="text"
+                            android:text="@={viewModel.ingAmount}"
                             android:maxLength="10" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,6 +106,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="text"
+                            android:text="@={viewModel.ingUnit}"
                             android:maxLength="15" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -154,7 +157,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="text"
-                            android:maxLength="500" />
+                            android:maxLength="500"
+                            android:text="@={viewModel.descText}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>

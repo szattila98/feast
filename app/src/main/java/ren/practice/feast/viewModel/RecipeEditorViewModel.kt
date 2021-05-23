@@ -31,12 +31,28 @@ class RecipeEditorViewModel : ViewModel() {
 
     private var createdDate = LocalDate.now()
 
-    fun addIngredient(ingredient: Ingredient) {
-        _ingredients.value?.add(ingredient)
+    private var _ingName = MutableLiveData("")
+    val ingName get() = _ingName
+
+    private var _ingAmount = MutableLiveData("")
+    val ingAmount get() = _ingAmount
+
+    private var _ingUnit = MutableLiveData("")
+    val ingUnit get() = _ingUnit
+
+    private var _descText = MutableLiveData("")
+    val descText get() = _descText
+
+    fun addIngredient() {
+        _ingredients.value?.add(Ingredient(ingName.value!!, ingAmount.value!!, ingUnit.value!!))
+        ingName.value = ""
+        ingAmount.value = ""
+        ingUnit.value = ""
     }
 
-    fun addDescriptionRecord(description: Description) {
-        _descriptionList.value?.add(description)
+    fun addDescriptionRecord() {
+        _descriptionList.value?.add(Description(descText.value!!))
+        descText.value = ""
     }
 
     fun removeIngredient(ingredient: Ingredient) {
