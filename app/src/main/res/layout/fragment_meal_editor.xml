@@ -10,76 +10,81 @@
             type="ren.practice.feast.viewModel.MealEditorViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        tools:context=".fragment.MealEditorFragment">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_layout_meal_name"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"
-            android:hint="@string/meal_dialog_name"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".fragment.MealEditorFragment">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_meal_name"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_layout_meal_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:maxLength="30"
-                android:text="@={viewModel.mealName}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
+                android:hint="@string/meal_dialog_name"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_meal_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.date.toString() + ':' + viewModel.time.toString()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_layout_meal_name"
-            tools:text="1991.01.01" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_meal_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:maxLength="30"
+                    android:text="@={viewModel.mealName}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <TimePicker
-            android:id="@+id/timepicker_meal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_meal_date" />
+            <TextView
+                android:id="@+id/text_meal_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.date.toString() + ':' + viewModel.time.toString()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_layout_meal_name"
+                tools:text="1991.01.01" />
 
-        <TextView
-            android:id="@+id/text_meal_chosen_recipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.chosenRecipe.name}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timepicker_meal"
-            tools:text="Recipe" />
+            <TimePicker
+                android:id="@+id/timepicker_meal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_meal_date" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_recipes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/text_meal_chosen_recipe"
-            tools:itemCount="5"
-            tools:listitem="@layout/item_recipe_record" />
+            <TextView
+                android:id="@+id/text_meal_chosen_recipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.chosenRecipe.name}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timepicker_meal"
+                tools:text="Recipe" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_save_meal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save_meal"
-            app:layout_constraintTop_toBottomOf="@id/recycler_recipes" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_recipes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/text_meal_chosen_recipe"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_recipe_record" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_save_meal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_meal"
+                app:layout_constraintTop_toBottomOf="@id/recycler_recipes" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
