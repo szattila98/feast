@@ -85,4 +85,14 @@ object DataSource {
 
     fun readMeal(id: Long) = meals.find { it.id == id }!!
 
+    fun deleteRecipe(id: Long) {
+        recipes.removeIf { it.id == id }
+    }
+
+    fun isRecipeUnrelatedToMeals(id: Long): Boolean {
+        for (meal in meals) {
+            if (meal.recipeId == id) return false
+        }
+        return true
+    }
 }

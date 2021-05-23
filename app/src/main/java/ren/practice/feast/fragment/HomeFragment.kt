@@ -17,7 +17,7 @@ import ren.practice.feast.viewModel.MealCalendarViewModel
 import java.time.LocalDate
 
 
-class MealCalendarFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentMealCalendarBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +44,7 @@ class MealCalendarFragment : Fragment() {
         initRecycler()
         binding.fabNewMeal.setOnClickListener {
             val selectedDate = binding.calendarWeek.selectedDate!!
-            val action = MealCalendarFragmentDirections
+            val action = HomeFragmentDirections
                 .actionHomeFragmentToMealEditorFragment(
                     LocalDate.of(selectedDate.year, selectedDate.month, selectedDate.day)
                 )
@@ -65,13 +65,13 @@ class MealCalendarFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.item_new_recipe -> {
-            val action = MealCalendarFragmentDirections.actionHomeFragmentToNewRecipe()
+        R.id.menu_item_new_recipe -> {
+            val action = HomeFragmentDirections.actionHomeFragmentToNewRecipe()
             binding.root.findNavController().navigate(action)
             true
         }
-        R.id.item_recipe_list -> {
-            val action = MealCalendarFragmentDirections.actionHomeFragmentToRecipeListFragment()
+        R.id.menu_item_recipe_list -> {
+            val action = HomeFragmentDirections.actionHomeFragmentToRecipeListFragment()
             binding.root.findNavController().navigate(action)
             true
         }
@@ -117,7 +117,7 @@ class MealCalendarFragment : Fragment() {
                 meals,
                 clickListener = { meal ->
                     meal.recipeId?.let {
-                        val action = MealCalendarFragmentDirections
+                        val action = HomeFragmentDirections
                             .actionHomeFragmentToRecipeDetailsFragment(it)
                         binding.root.findNavController().navigate(action)
                     }
@@ -134,7 +134,7 @@ class MealCalendarFragment : Fragment() {
             .setTitle(R.string.meal_menu_title)
             .setPositiveButton(R.string.meal_menu_edit) { dialog, _ ->
                 dialog.dismiss()
-                val action = MealCalendarFragmentDirections
+                val action = HomeFragmentDirections
                     .actionHomeFragmentToMealEditorFragment(mealId = mealId)
                 binding.root.findNavController().navigate(action)
                 viewModel.readRelevantMeals()

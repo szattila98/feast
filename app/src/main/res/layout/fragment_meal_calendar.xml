@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
-        tools:context=".fragment.MealCalendarFragment">
+        tools:context=".fragment.HomeFragment">
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendar_week"

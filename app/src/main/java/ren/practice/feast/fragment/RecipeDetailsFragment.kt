@@ -1,9 +1,12 @@
 package ren.practice.feast.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ren.practice.feast.R
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
@@ -56,5 +59,33 @@ class RecipeDetailsFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_recipe_details, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.menu_item_edit_recipe -> {
+            val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToNewRecipeFragment()
+            findNavController().navigate(action)
+            true
+        }
+        R.id.menu_item_delete_recipe -> {
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.recipe_details_delete_dialog_title)
+                .setPositiveButton(R.string.recipe_details_dialog_delete) { dialog, _ ->
+                    dialog.dismiss()
+                    val success = viewModel.deleteRecipe()
+                    if (success) {
+                        val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToRecipeListFragment()
+                        findNavController().navigate(action)
+                    } else {
+                        Toast.makeText(requireContext(), R.string.recipe_details_delete_dialog_toast, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .setNegativeButton(R.string.recipe_details_dialog_cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 }

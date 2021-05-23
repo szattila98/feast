@@ -15,4 +15,15 @@ class RecipeDetailsViewModel : ViewModel() {
     fun loadRecipe(id: Long) {
         _recipe.value = DataSource.readRecipe(id)
     }
+
+    fun deleteRecipe(): Boolean {
+        _recipe.value?.id?.let {
+            val isUnrelated = DataSource.isRecipeUnrelatedToMeals(it)
+            if (isUnrelated) {
+                DataSource.deleteRecipe(it)
+            }
+            return isUnrelated
+        }
+        return false
+    }
 }
