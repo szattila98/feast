@@ -32,7 +32,6 @@ class RecipeAdapter(
 
         fun bind(recipe: Recipe) {
             binding.item = recipe
-            // binding.executePendingBindings()
         }
     }
 }

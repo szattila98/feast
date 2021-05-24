@@ -1,15 +1,18 @@
 package ren.practice.feast.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import ren.practice.core.domain.Description
 import ren.practice.core.domain.Ingredient
 import ren.practice.core.domain.Recipe
-import ren.practice.feast.data.DataSource
+import ren.practice.framework.Interactors
 import java.time.LocalDate
 
-class RecipeEditorViewModel : ViewModel() {
+class RecipeEditorViewModel(private val interactors: Interactors) : ViewModel() {
 
     private var _recipeId = MutableLiveData(0L)
     var recipeId: Long?
@@ -67,20 +70,24 @@ class RecipeEditorViewModel : ViewModel() {
         }
     }
 
-    fun submitRecipe(): Long {
+    suspend fun submitRecipe(): Long {
         if (recipeId == 0L) {
             createdDate = LocalDate.now()
         }
-        return DataSource.saveRecipe(
-            Recipe(recipeId!!, _recipeName.value!!, _ingredients.value!!, _descriptionList.value!!, createdDate)
+        val recipe = Recipe(recipeId!!, _recipeName.value!!, _ingredients.value!!, _descriptionList.value!!, createdDate)
+        Log.i("recipe", recipe.toString())
+        return interactors.saveRecipe(
+            recipe
         )
     }
 
     fun setRecipeDetailsToEdit() {
-        val recipe = DataSource.readRecipe(recipeId!!)
-        _recipeName.value = recipe.name
-        createdDate = recipe.created
-        _ingredients.value = recipe.ingredients
-        _descriptionList.value = recipe.description
+        GlobalScope.launch {
+            val recipe = interactors.findRecipe(recipeId!!)
+            _recipeName.postValue(recipe.name)
+            createdDate = recipe.created
+            _ingredients.postValue(recipe.ingredients)
+            _descriptionList.postValue(recipe.description)
+        }
     }
 }

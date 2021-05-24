@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.inject
 import ren.practice.feast.R
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
@@ -18,7 +19,7 @@ class RecipeDetailsFragment : Fragment() {
     private var _binding: FragmentRecipeDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RecipeDetailsViewModel by viewModels()
+    private val viewModel: RecipeDetailsViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -39,7 +40,7 @@ class RecipeDetailsFragment : Fragment() {
             val recipeId = RecipeDetailsFragmentArgs.fromBundle(it).recipeId
             viewModel.loadRecipe(recipeId)
         }
-        viewModel.recipe.value?.let {
+        viewModel.recipe.observe(viewLifecycleOwner) {
             binding.textRecipeDetailsName.text = it.name
             binding.textRecipeDetailsCreated.text = it.created.toString()
             binding.recyclerRecipeDetailsIngredients.adapter =
@@ -74,7 +75,9 @@ class RecipeDetailsFragment : Fragment() {
                 .setTitle(R.string.delete_dialog_title)
                 .setPositiveButton(R.string.delete_dialog_delete_option) { dialog, _ ->
                     dialog.dismiss()
-                    val success = viewModel.deleteRecipe()
+                    val success = runBlocking {
+                        viewModel.deleteRecipe()
+                    }
                     if (success) {
                         val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToRecipeListFragment()
                         findNavController().navigate(action)

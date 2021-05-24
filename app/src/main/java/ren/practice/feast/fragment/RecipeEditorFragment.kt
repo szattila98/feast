@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.inject
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
 import ren.practice.feast.databinding.FragmentRecipeEditorBinding
@@ -17,7 +18,7 @@ class RecipeEditorFragment : Fragment() {
     private var _binding: FragmentRecipeEditorBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RecipeEditorViewModel by viewModels()
+    private val viewModel: RecipeEditorViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,20 +38,19 @@ class RecipeEditorFragment : Fragment() {
             }
         }
 
-        binding.recyclerIngredients.adapter =
-            viewModel.ingredients.value?.let {
-                IngredientAdapter(it) { ingredient ->
-                    viewModel.removeIngredient(ingredient)
-                    binding.recyclerIngredients.adapter?.notifyDataSetChanged()
-                }
+        viewModel.ingredients.observe(viewLifecycleOwner) {
+            binding.recyclerIngredients.adapter = IngredientAdapter(it) { ingredient ->
+                viewModel.removeIngredient(ingredient)
+                binding.recyclerIngredients.adapter?.notifyDataSetChanged()
             }
-        binding.recyclerDescriptions.adapter =
-            viewModel.descriptionList.value?.let {
+        }
+        viewModel.descriptionList.observe(viewLifecycleOwner) {
+            binding.recyclerDescriptions.adapter =
                 DescriptionAdapter(it) { description ->
                     viewModel.removeDescriptionRecord(description)
                     binding.recyclerDescriptions.adapter?.notifyDataSetChanged()
                 }
-            }
+        }
 
         binding.buttonAddIngredient.setOnClickListener { addIngredient(); }
         binding.buttonAddDescription.setOnClickListener { addDescription(); }
@@ -75,7 +75,9 @@ class RecipeEditorFragment : Fragment() {
     }
 
     private fun submitRecipe() {
-        val recipeId = viewModel.submitRecipe()
+        val recipeId = runBlocking {
+            viewModel.submitRecipe()
+        }
         val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(recipeId)
         binding.root.findNavController().navigate(action)
     }

@@ -4,12 +4,13 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
+import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.inject
 import ren.practice.feast.R
 import ren.practice.feast.adapter.MealAdapter
 import ren.practice.feast.databinding.FragmentMealCalendarBinding
@@ -22,7 +23,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentMealCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MealCalendarViewModel by viewModels()
+    private val viewModel: MealCalendarViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -96,7 +97,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateCalendarDots() {
-        val meals = viewModel.readEveryMeal()
+        val meals = runBlocking {
+            viewModel.readEveryMeal()
+        }
         val dates: MutableSet<CalendarDay> = mutableSetOf()
         for (meal in meals) {
             val date = meal.date.toLocalDate()

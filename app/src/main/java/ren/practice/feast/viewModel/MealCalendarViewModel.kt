@@ -3,11 +3,13 @@ package ren.practice.feast.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import ren.practice.core.domain.Meal
-import ren.practice.feast.data.DataSource
+import ren.practice.framework.Interactors
 import java.time.LocalDate
 
-class MealCalendarViewModel : ViewModel() {
+class MealCalendarViewModel(private val interactors: Interactors) : ViewModel() {
 
     private var _relevantMeals = MutableLiveData(mutableListOf<Meal>())
     val relevantMeals get() = _relevantMeals
@@ -15,15 +17,17 @@ class MealCalendarViewModel : ViewModel() {
     private var _currentDate = MutableLiveData(LocalDate.now())
     val currentDate: LiveData<LocalDate> get() = _currentDate
 
-    fun readEveryMeal() = DataSource.readMeals()
+    suspend fun readEveryMeal() = interactors.findAllMeals()
 
     fun setCurrentDate(date: LocalDate) {
         _currentDate.value = date
     }
 
     fun readRelevantMeals() {
-        _currentDate.value?.let {
-            loadMeals(DataSource.readRelevantMeals(it))
+        GlobalScope.launch {
+            _currentDate.value?.let {
+                loadMeals(interactors.findRelevantMeals(it))
+            }
         }
     }
 
@@ -33,7 +37,9 @@ class MealCalendarViewModel : ViewModel() {
     }
 
     fun deleteMeal(id: Long) {
-        DataSource.deleteMeal(id)
-        readRelevantMeals()
+        GlobalScope.launch {
+            interactors.deleteMeal(id)
+            readRelevantMeals()
+        }
     }
 }

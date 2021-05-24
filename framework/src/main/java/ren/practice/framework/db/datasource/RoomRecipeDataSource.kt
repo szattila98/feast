@@ -23,6 +23,7 @@ class RoomRecipeDataSource(context: Context) : RecipeDataSource {
     private val descriptionDao: DescriptionDao = MealDatabase.getInstance(context).descriptionDao()
 
     override suspend fun save(recipe: Recipe): Long {
+        delete(recipe.id)
         val recipeId = recipeDao.save(
             RecipeEntity(
                 name = recipe.name,

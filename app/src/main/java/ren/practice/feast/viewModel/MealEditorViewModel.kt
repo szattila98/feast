@@ -2,25 +2,31 @@ package ren.practice.feast.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import ren.practice.core.domain.Meal
 import ren.practice.core.domain.Recipe
-import ren.practice.feast.data.DataSource
+import ren.practice.framework.Interactors
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class MealEditorViewModel : ViewModel() {
+class MealEditorViewModel(private val interactors: Interactors) : ViewModel() {
 
-    private var _recipes = MutableLiveData(listOf<Recipe>())
+    private var _recipes = MutableLiveData<List<Recipe>>().apply {
+        GlobalScope.launch {
+            postValue(interactors.findAllRecipes())
+        }
+    }
     val recipes: MutableLiveData<List<Recipe>> get() = _recipes
 
-    private var _chosenRecipe = MutableLiveData<Recipe?>()
-    val chosenRecipe: MutableLiveData<Recipe?> get() = _chosenRecipe
+    private var _chosenRecipeName = MutableLiveData("")
+    val chosenRecipeName: MutableLiveData<String> get() = _chosenRecipeName
 
     private var _date = MutableLiveData<LocalDate>()
     val date: MutableLiveData<LocalDate> get() = _date
 
-    private var _time = MutableLiveData<LocalTime>(LocalTime.now().withSecond(0).withNano(0))
+    private var _time = MutableLiveData(LocalTime.now().withSecond(0).withNano(0))
     val time: MutableLiveData<LocalTime> get() = _time
 
     private var _mealName = MutableLiveData("")
@@ -35,46 +41,45 @@ class MealEditorViewModel : ViewModel() {
             _mealId.value = value
         }
 
-    init {
-        _recipes.value = DataSource.getRecipes()
-    }
-
     fun setMealName(name: String) {
-        _mealName.value = name
+        _mealName.postValue(name)
     }
 
     fun setDate(date: LocalDate) {
-        _date.value = date
+        _date.postValue(date)
     }
 
     fun setTime(time: LocalTime) {
-        _time.value = time
+        _time.postValue(time)
     }
 
-    fun setChosenRecipeId(id: Long) {
-        if (_chosenRecipeId.value != id) {
-            _chosenRecipeId.value = id
+    fun setChosenRecipeId(recipe: Recipe) {
+        if (_chosenRecipeId.value != recipe.id) {
+            _chosenRecipeId.postValue(recipe.id)
+            _chosenRecipeName.postValue(recipe.name)
         } else {
-            _chosenRecipeId.value = null
+            _chosenRecipeId.postValue(null)
+            _chosenRecipeName.postValue("")
         }
-        _chosenRecipe.value = null
-        _chosenRecipeId.value?.let { _chosenRecipe.value = DataSource.readRecipe(it) }
     }
 
-    fun saveMeal(): Boolean { // TODO validation
-        val dateTime = LocalDateTime.of(_date.value, _time.value)
-        val meal = Meal(mealId!!, dateTime, _mealName.value!!, _chosenRecipeId.value)
-        DataSource.saveMeal(meal)
-        return true
+    fun saveMeal() { // TODO validation
+        GlobalScope.launch {
+            val dateTime = LocalDateTime.of(_date.value, _time.value)
+            val meal = Meal(mealId!!, dateTime, _mealName.value!!, _chosenRecipeId.value)
+            interactors.saveMeal(meal)
+        }
     }
 
     fun setMealDetailsToEdit() {
-        val meal = DataSource.readMeal(mealId!!)
-        setMealName(meal.name)
-        setDate(meal.date.toLocalDate())
-        setTime(meal.date.toLocalTime())
-        meal.recipeId?.let {
-            setChosenRecipeId(it)
+        GlobalScope.launch {
+            val meal = interactors.findMeal(mealId!!)
+            setMealName(meal.name)
+            setDate(meal.date.toLocalDate())
+            setTime(meal.date.toLocalTime())
+            meal.recipeId?.let {
+                setChosenRecipeId(interactors.findRecipe(it))
+            }
         }
     }
 
