@@ -8,5 +8,5 @@ import java.time.LocalDate
 data class RecipeEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String,
-    val created: LocalDate = LocalDate.now(),
+    val created: String = LocalDate.now().toString(),
 )

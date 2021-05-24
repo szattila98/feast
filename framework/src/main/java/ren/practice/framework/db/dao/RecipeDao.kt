@@ -10,7 +10,7 @@ import ren.practice.framework.db.entity.RecipeEntity
 interface RecipeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(recipe: RecipeEntity)
+    suspend fun save(recipe: RecipeEntity): Long
 
     @Query("SELECT * FROM recipe")
     suspend fun findAll(): List<RecipeEntity>
