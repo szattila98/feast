@@ -20,7 +20,7 @@ class MealEditorViewModel(private val interactors: Interactors) : ViewModel() {
     }
     val mealId = MutableLiveData(0L)
     val mealName = MutableLiveData("")
-    val date = MutableLiveData<LocalDate>(LocalDate.now())
+    val date = MutableLiveData(LocalDate.now())
     val time = MutableLiveData(LocalTime.now().withSecond(0).withNano(0))
     private val chosenRecipeId = MutableLiveData<Long?>(null)
     val chosenRecipeName = MutableLiveData("")
