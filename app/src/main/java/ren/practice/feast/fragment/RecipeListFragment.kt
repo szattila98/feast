@@ -24,17 +24,10 @@ class RecipeListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeListBinding.inflate(inflater, container, false)
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.recipes.observe(viewLifecycleOwner) { recipes ->
-            binding.recyclerRecipes.adapter = RecipeAdapter(recipes) { recipe ->
-                val action = RecipeListFragmentDirections
-                    .actionRecipeListFragmentToRecipeDetailsFragment(recipe.id)
-                binding.root.findNavController().navigate(action)
-            }
-        }
+        initRecipeListObserver()
 
         return binding.root
     }
@@ -42,5 +35,15 @@ class RecipeListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initRecipeListObserver() {
+        viewModel.recipes.observe(viewLifecycleOwner) { recipes ->
+            binding.recyclerRecipes.adapter = RecipeAdapter(recipes) { recipe ->
+                val action = RecipeListFragmentDirections
+                    .actionRecipeListFragmentToRecipeDetailsFragment(recipe.id)
+                binding.root.findNavController().navigate(action)
+            }
+        }
     }
 }

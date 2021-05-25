@@ -63,11 +63,9 @@ dependencies {
     implementation applicationDependencies.fragmentKtx
     implementation applicationDependencies.lifecycleLiveDataKtx
     implementation applicationDependencies.lifecycleViewModelKtx
-
-    implementation "org.koin:koin-android:2.0.1"
-    implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
-    implementation 'org.koin:koin-androidx-scope:2.0.1'
-
+    implementation applicationDependencies.koinAndroid
+    implementation applicationDependencies.koinAndroidxViewmodel
+    implementation applicationDependencies.koinAndroidxScope
     implementation applicationDependencies.materialCalendarView
 
     testImplementation testDependencies.junit

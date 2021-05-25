@@ -1,6 +1,5 @@
 package ren.practice.feast.viewModel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.GlobalScope
@@ -10,24 +9,22 @@ import ren.practice.framework.Interactors
 
 class RecipeDetailsViewModel(private val interactors: Interactors) : ViewModel() {
 
-    private var _recipe = MutableLiveData(Recipe(name = ""))
-    val recipe: LiveData<Recipe>
-        get() = _recipe
+    val recipe = MutableLiveData(Recipe(name = ""))
+    val deleteSuccessful = MutableLiveData<Boolean>()
 
-    fun loadRecipe(id: Long) {
-        GlobalScope.launch {
-            _recipe.postValue(interactors.findRecipe(id))
-        }
+    fun loadRecipe(id: Long) = GlobalScope.launch {
+        recipe.postValue(interactors.findRecipe(id))
     }
 
-    suspend fun deleteRecipe(): Boolean {
-        _recipe.value?.id?.let {
+    fun deleteRecipe() = GlobalScope.launch {
+        recipe.value?.id?.let {
             val isUnrelated = interactors.isRecipeUnrelatedToMeals(it)
             if (isUnrelated) {
                 interactors.deleteRecipe(it)
             }
-            return isUnrelated
+            deleteSuccessful.postValue(isUnrelated)
+            return@launch
         }
-        return false
+        deleteSuccessful.postValue(false)
     }
 }

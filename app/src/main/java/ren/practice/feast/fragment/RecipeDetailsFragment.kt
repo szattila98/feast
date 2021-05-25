@@ -6,7 +6,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 import ren.practice.feast.R
 import ren.practice.feast.adapter.DescriptionAdapter
@@ -32,22 +31,10 @@ class RecipeDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeDetailsBinding.inflate(inflater, container, false)
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        arguments?.let {
-            val recipeId = RecipeDetailsFragmentArgs.fromBundle(it).recipeId
-            viewModel.loadRecipe(recipeId)
-        }
-        viewModel.recipe.observe(viewLifecycleOwner) {
-            binding.textRecipeDetailsName.text = it.name
-            binding.textRecipeDetailsCreated.text = it.created.toString()
-            binding.recyclerRecipeDetailsIngredients.adapter =
-                IngredientAdapter(it.ingredients) {}
-            binding.recyclerRecipeDetailsDescriptions.adapter =
-                DescriptionAdapter(it.description) {}
-        }
+        initArguments()
 
         return binding.root
     }
@@ -75,14 +62,14 @@ class RecipeDetailsFragment : Fragment() {
                 .setTitle(R.string.delete_dialog_title)
                 .setPositiveButton(R.string.delete_dialog_delete_option) { dialog, _ ->
                     dialog.dismiss()
-                    val success = runBlocking {
-                        viewModel.deleteRecipe()
-                    }
-                    if (success) {
-                        val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToRecipeListFragment()
-                        findNavController().navigate(action)
-                    } else {
-                        Toast.makeText(requireContext(), R.string.delete_dialog_toast, Toast.LENGTH_SHORT).show()
+                    viewModel.deleteRecipe()
+                    viewModel.deleteSuccessful.observe(viewLifecycleOwner) {
+                        if (it) {
+                            val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToRecipeListFragment()
+                            findNavController().navigate(action)
+                        } else {
+                            Toast.makeText(requireContext(), R.string.delete_dialog_toast, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 .setNegativeButton(R.string.delete_dialog_cancel_option) { dialog, _ ->
@@ -92,5 +79,20 @@ class RecipeDetailsFragment : Fragment() {
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun initArguments() {
+        arguments?.let {
+            val recipeId = RecipeDetailsFragmentArgs.fromBundle(it).recipeId
+            viewModel.loadRecipe(recipeId)
+        }
+        viewModel.recipe.observe(viewLifecycleOwner) {
+            binding.textRecipeDetailsName.text = it.name
+            binding.textRecipeDetailsCreated.text = it.created.toString()
+            binding.recyclerRecipeDetailsIngredients.adapter =
+                IngredientAdapter(it.ingredients) {}
+            binding.recyclerRecipeDetailsDescriptions.adapter =
+                DescriptionAdapter(it.description) {}
+        }
     }
 }

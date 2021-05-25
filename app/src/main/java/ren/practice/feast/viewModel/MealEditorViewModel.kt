@@ -13,74 +13,42 @@ import java.time.LocalTime
 
 class MealEditorViewModel(private val interactors: Interactors) : ViewModel() {
 
-    private var _recipes = MutableLiveData<List<Recipe>>().apply {
+    val recipes = MutableLiveData<List<Recipe>>().apply {
         GlobalScope.launch {
             postValue(interactors.findAllRecipes())
         }
     }
-    val recipes: MutableLiveData<List<Recipe>> get() = _recipes
+    val mealId = MutableLiveData(0L)
+    val mealName = MutableLiveData("")
+    val date = MutableLiveData<LocalDate>(LocalDate.now())
+    val time = MutableLiveData(LocalTime.now().withSecond(0).withNano(0))
+    private val chosenRecipeId = MutableLiveData<Long?>(null)
+    val chosenRecipeName = MutableLiveData("")
 
-    private var _chosenRecipeName = MutableLiveData("")
-    val chosenRecipeName: MutableLiveData<String> get() = _chosenRecipeName
-
-    private var _date = MutableLiveData<LocalDate>()
-    val date: MutableLiveData<LocalDate> get() = _date
-
-    private var _time = MutableLiveData(LocalTime.now().withSecond(0).withNano(0))
-    val time: MutableLiveData<LocalTime> get() = _time
-
-    private var _mealName = MutableLiveData("")
-    val mealName: MutableLiveData<String> get() = _mealName
-
-    private var _chosenRecipeId = MutableLiveData<Long?>(null)
-
-    private var _mealId = MutableLiveData(0L)
-    var mealId: Long?
-        get() = _mealId.value
-        set(value) {
-            _mealId.value = value
-        }
-
-    fun setMealName(name: String) {
-        _mealName.postValue(name)
-    }
-
-    fun setDate(date: LocalDate) {
-        _date.postValue(date)
-    }
-
-    fun setTime(time: LocalTime) {
-        _time.postValue(time)
-    }
-
-    fun setChosenRecipeId(recipe: Recipe) {
-        if (_chosenRecipeId.value != recipe.id) {
-            _chosenRecipeId.postValue(recipe.id)
-            _chosenRecipeName.postValue(recipe.name)
+    fun chooseRecipe(recipe: Recipe) {
+        if (chosenRecipeId.value != recipe.id) {
+            chosenRecipeId.postValue(recipe.id)
+            chosenRecipeName.postValue(recipe.name)
         } else {
-            _chosenRecipeId.postValue(null)
-            _chosenRecipeName.postValue("")
+            chosenRecipeId.postValue(null)
+            chosenRecipeName.postValue("")
         }
     }
 
-    fun saveMeal() { // TODO validation
-        GlobalScope.launch {
-            val dateTime = LocalDateTime.of(_date.value, _time.value)
-            val meal = Meal(mealId!!, dateTime, _mealName.value!!, _chosenRecipeId.value)
-            interactors.saveMeal(meal)
+    fun saveMeal() = GlobalScope.launch {
+        val dateTime = LocalDateTime.of(date.value, time.value)
+        val meal = Meal(mealId.value!!, dateTime, mealName.value!!, chosenRecipeId.value)
+        interactors.saveMeal(meal)
+    } // TODO validation
+
+
+    fun setMealDetailsToEdit() = GlobalScope.launch {
+        val meal = interactors.findMeal(mealId.value!!)
+        mealName.postValue(meal.name)
+        date.postValue(meal.date.toLocalDate())
+        time.postValue(meal.date.toLocalTime())
+        meal.recipeId?.let {
+            chooseRecipe(interactors.findRecipe(it))
         }
     }
-
-    fun setMealDetailsToEdit() {
-        GlobalScope.launch {
-            val meal = interactors.findMeal(mealId!!)
-            setMealName(meal.name)
-            setDate(meal.date.toLocalDate())
-            setTime(meal.date.toLocalTime())
-            meal.recipeId?.let {
-                setChosenRecipeId(interactors.findRecipe(it))
-            }
-        }
-    }
-
 }

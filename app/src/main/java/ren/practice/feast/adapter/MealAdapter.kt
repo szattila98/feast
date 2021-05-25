@@ -8,7 +8,7 @@ import ren.practice.feast.R
 import ren.practice.feast.databinding.ItemMealRecordBinding
 
 class MealAdapter(
-    private val meals: List<Meal>,
+    private val meals: MutableList<Meal>,
     private val clickListener: (Meal) -> Unit,
     private val longClickListener: (Meal) -> Unit
 ) : RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
@@ -23,6 +23,12 @@ class MealAdapter(
 
     override fun getItemCount(): Int {
         return meals.size
+    }
+
+    fun update(newMeals: List<Meal>) {
+        meals.clear()
+        meals.addAll(newMeals)
+        notifyDataSetChanged()
     }
 
     class MealViewHolder(

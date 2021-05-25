@@ -9,12 +9,11 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
-import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 import ren.practice.feast.R
 import ren.practice.feast.adapter.MealAdapter
 import ren.practice.feast.databinding.FragmentMealCalendarBinding
-import ren.practice.feast.viewModel.MealCalendarViewModel
+import ren.practice.feast.viewModel.HomeViewModel
 import java.time.LocalDate
 
 
@@ -23,7 +22,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentMealCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MealCalendarViewModel by inject()
+    private val viewModel: HomeViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -36,21 +35,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMealCalendarBinding.inflate(inflater, container, false)
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         initCalendar()
-        updateCalendarDots()
+        viewModel.readEveryMeal()
+        initCalendarDotObserver()
         initRecycler()
-        binding.fabNewMeal.setOnClickListener {
-            val selectedDate = binding.calendarWeek.selectedDate!!
-            val action = HomeFragmentDirections
-                .actionHomeFragmentToMealEditorFragment(
-                    LocalDate.of(selectedDate.year, selectedDate.month, selectedDate.day)
-                )
-            binding.root.findNavController().navigate(action)
-        }
+        initFab()
 
         return binding.root
     }
@@ -89,24 +81,22 @@ class HomeFragment : Fragment() {
                 .commit()
             binding.calendarWeek.selectedDate = CalendarDay.from(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth)
             binding.calendarWeek.setOnDateChangedListener { _, day, _ ->
-                viewModel.setCurrentDate(LocalDate.of(day.year, day.month, day.day))
+                viewModel.currentDate.value = LocalDate.of(day.year, day.month, day.day)
                 viewModel.readRelevantMeals()
-                binding.recyclerMeals.adapter?.notifyDataSetChanged()
             }
         }
     }
 
-    private fun updateCalendarDots() {
-        val meals = runBlocking {
-            viewModel.readEveryMeal()
+    private fun initCalendarDotObserver() {
+        viewModel.everyMeal.observe(viewLifecycleOwner) {
+            val dates: MutableSet<CalendarDay> = mutableSetOf()
+            for (meal in it) {
+                val date = meal.date.toLocalDate()
+                dates.add(getCalendarDay(date))
+            }
+            binding.calendarWeek.removeDecorators()
+            binding.calendarWeek.addDecorator(EventDecorator(resources.getColor(R.color.red, context?.theme), dates))
         }
-        val dates: MutableSet<CalendarDay> = mutableSetOf()
-        for (meal in meals) {
-            val date = meal.date.toLocalDate()
-            dates.add(getCalendarDay(date))
-        }
-        binding.calendarWeek.removeDecorators()
-        binding.calendarWeek.addDecorator(EventDecorator(resources.getColor(R.color.red, context?.theme), dates))
     }
 
     private fun getCalendarDay(date: LocalDate): CalendarDay {
@@ -115,9 +105,9 @@ class HomeFragment : Fragment() {
 
     private fun initRecycler() {
         viewModel.readRelevantMeals()
-        binding.recyclerMeals.adapter = viewModel.relevantMeals.value?.let { meals ->
+        val adapter = viewModel.relevantMeals.value?.let { meals ->
             MealAdapter(
-                meals,
+                meals.toMutableList(),
                 clickListener = { meal ->
                     meal.recipeId?.let {
                         val action = HomeFragmentDirections
@@ -129,6 +119,10 @@ class HomeFragment : Fragment() {
                     showMenuDialog(it.id)
                 }
             )
+        }
+        binding.recyclerMeals.adapter = adapter
+        viewModel.relevantMeals.observe(viewLifecycleOwner) {
+            adapter?.update(it)
         }
     }
 
@@ -147,12 +141,22 @@ class HomeFragment : Fragment() {
                 dialog.dismiss()
                 viewModel.deleteMeal(mealId)
                 binding.recyclerMeals.adapter?.notifyDataSetChanged()
-                updateCalendarDots()
+                viewModel.readEveryMeal()
             }
             .setNeutralButton(R.string.meal_dialog_cancel_btn) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun initFab() {
+        binding.fabNewMeal.setOnClickListener {
+            viewModel.currentDate.value?.let {
+                val action = HomeFragmentDirections
+                    .actionHomeFragmentToMealEditorFragment(it)
+                binding.root.findNavController().navigate(action)
+            }
+        }
     }
 
     class EventDecorator(private val color: Int, private val dates: Set<CalendarDay>) : DayViewDecorator {

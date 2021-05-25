@@ -25,35 +25,13 @@ class MealEditorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMealEditorBinding.inflate(inflater, container, false)
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        arguments?.let {
-            MealEditorFragmentArgs.fromBundle(it).selectedDate?.let { selectedDate ->
-                viewModel.setDate(selectedDate)
-            }
-            val mealId = MealEditorFragmentArgs.fromBundle(it).mealId
-            if (mealId != 0L) {
-                viewModel.mealId = mealId
-                viewModel.setMealDetailsToEdit()
-            }
-        }
-        viewModel.recipes.observe(viewLifecycleOwner) { recipes ->
-            binding.recyclerRecipes.adapter = RecipeAdapter(recipes) { recipe ->
-                viewModel.setChosenRecipeId(recipe)
-            }
-        }
-
-        binding.timepickerMeal.setIs24HourView(true)
-        binding.timepickerMeal.setOnTimeChangedListener { _, hour, min ->
-            viewModel.setTime(LocalTime.of(hour, min))
-        }
-        binding.buttonSaveMeal.setOnClickListener {
-            viewModel.saveMeal()
-            val action = MealEditorFragmentDirections.actionMealEditorFragmentToHomeFragment()
-            binding.root.findNavController().navigate(action)
-        }
+        initArguments()
+        initRecipeListObserver()
+        initTimePicker()
+        initSaveButton()
 
         return binding.root
     }
@@ -61,6 +39,42 @@ class MealEditorFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initArguments() {
+        arguments?.let {
+            MealEditorFragmentArgs.fromBundle(it).selectedDate?.let { selectedDate ->
+                viewModel.date.postValue(selectedDate)
+            }
+            val mealId = MealEditorFragmentArgs.fromBundle(it).mealId
+            if (mealId != 0L) {
+                viewModel.mealId.value = mealId
+                viewModel.setMealDetailsToEdit()
+            }
+        }
+    }
+
+    private fun initRecipeListObserver() {
+        viewModel.recipes.observe(viewLifecycleOwner) { recipes ->
+            binding.recyclerRecipes.adapter = RecipeAdapter(recipes) { recipe ->
+                viewModel.chooseRecipe(recipe)
+            }
+        }
+    }
+
+    private fun initTimePicker() {
+        binding.timepickerMeal.setIs24HourView(true)
+        binding.timepickerMeal.setOnTimeChangedListener { _, hour, min ->
+            viewModel.time.postValue(LocalTime.of(hour, min))
+        }
+    }
+
+    private fun initSaveButton() {
+        binding.buttonSaveMeal.setOnClickListener {
+            viewModel.saveMeal()
+            val action = MealEditorFragmentDirections.actionMealEditorFragmentToHomeFragment()
+            binding.root.findNavController().navigate(action)
+        }
     }
 
 }

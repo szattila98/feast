@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="ren.practice.feast.viewModel.MealCalendarViewModel" />
+            type="ren.practice.feast.viewModel.HomeViewModel" />
     </data>
 
     <RelativeLayout

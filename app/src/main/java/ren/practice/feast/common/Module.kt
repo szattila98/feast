@@ -1,4 +1,4 @@
-package ren.practice.feast.viewModel.common
+package ren.practice.feast.common
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -41,7 +41,7 @@ val interactors = module {
 
 val mealCalendarViewModel = module {
     viewModel {
-        MealCalendarViewModel(get())
+        HomeViewModel(get())
     }
 }
 
