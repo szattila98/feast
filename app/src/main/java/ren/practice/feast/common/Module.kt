@@ -33,8 +33,7 @@ val interactors = module {
             SaveRecipe(get()),
             FindAllRecipes(get()),
             FindRecipe(get()),
-            DeleteRecipe(get()),
-            IsRecipeUnrelatedToMeals(get())
+            DeleteRecipe(get())
         )
     }
 }

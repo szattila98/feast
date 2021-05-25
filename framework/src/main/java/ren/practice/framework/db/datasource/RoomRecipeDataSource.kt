@@ -23,9 +23,9 @@ class RoomRecipeDataSource(context: Context) : RecipeDataSource {
     private val descriptionDao: DescriptionDao = MealDatabase.getInstance(context).descriptionDao()
 
     override suspend fun save(recipe: Recipe): Long {
-        delete(recipe.id)
         val recipeId = recipeDao.save(
             RecipeEntity(
+                id = recipe.id,
                 name = recipe.name,
                 created = recipe.created.toString()
             )
@@ -45,16 +45,13 @@ class RoomRecipeDataSource(context: Context) : RecipeDataSource {
 
     override suspend fun findById(id: Long) = recipeFromEntity(recipeDao.findById(id))
 
-    override suspend fun delete(id: Long) {
-        recipeDao.deleteById(id)
-        ingredientDao.deleteAllByRecipeId(id)
-        descriptionDao.deleteAllByRecipeId(id)
-    }
-
-    override suspend fun isRecipeUnrelatedToMeals(id: Long): Boolean {
+    override suspend fun delete(id: Long): Boolean {
         mealDao.findAll().forEach {
             if (it.recipeId == id) return false
         }
+        recipeDao.deleteById(id)
+        ingredientDao.deleteAllByRecipeId(id)
+        descriptionDao.deleteAllByRecipeId(id)
         return true
     }
 

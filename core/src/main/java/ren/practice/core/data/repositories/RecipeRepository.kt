@@ -8,5 +8,4 @@ class RecipeRepository(private val dataSource: RecipeDataSource) {
     suspend fun findAll() = dataSource.findAll()
     suspend fun findById(id: Long) = dataSource.findById(id)
     suspend fun delete(id: Long) = dataSource.delete(id)
-    suspend fun isRecipeUnrelatedToMeals(id: Long) = dataSource.isRecipeUnrelatedToMeals(id)
 }

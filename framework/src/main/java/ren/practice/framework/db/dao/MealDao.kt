@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ren.practice.framework.db.entity.MealEntity
 
+
 @Dao
 interface MealDao {
 

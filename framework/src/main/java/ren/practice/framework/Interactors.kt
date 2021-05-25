@@ -12,6 +12,5 @@ data class Interactors(
     val saveRecipe: SaveRecipe,
     val findAllRecipes: FindAllRecipes,
     val findRecipe: FindRecipe,
-    val deleteRecipe: DeleteRecipe,
-    val isRecipeUnrelatedToMeals: IsRecipeUnrelatedToMeals
+    val deleteRecipe: DeleteRecipe
 )

@@ -15,6 +15,7 @@ class RoomMealDataSource(context: Context) : MealDataSource {
 
     override suspend fun save(meal: Meal) = dao.save(
         MealEntity(
+            id = meal.id,
             date = meal.date.toString(),
             name = meal.name,
             recipeId = meal.recipeId

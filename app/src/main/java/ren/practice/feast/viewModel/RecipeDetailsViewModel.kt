@@ -18,11 +18,8 @@ class RecipeDetailsViewModel(private val interactors: Interactors) : ViewModel()
 
     fun deleteRecipe() = GlobalScope.launch {
         recipe.value?.id?.let {
-            val isUnrelated = interactors.isRecipeUnrelatedToMeals(it)
-            if (isUnrelated) {
-                interactors.deleteRecipe(it)
-            }
-            deleteSuccessful.postValue(isUnrelated)
+            val isSuccessful = interactors.deleteRecipe(it)
+            deleteSuccessful.postValue(isSuccessful)
             return@launch
         }
         deleteSuccessful.postValue(false)
