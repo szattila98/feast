@@ -10,11 +10,10 @@
             type="ren.practice.feast.viewModel.RecipeEditorViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        tools:context=".fragment.RecipeEditorFragment">
+        android:padding="16dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -27,6 +26,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/text_tooltip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tooltip_long_tap_recipe"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/edit_layout_recipe_name"
                     android:layout_width="match_parent"
@@ -34,7 +41,7 @@
                     android:layout_marginTop="16dp"
                     android:hint="@string/name_of_new_recipe"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@+id/text_tooltip">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_recipe_name"
@@ -182,16 +189,26 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_confirm"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="1dp"
-            android:src="@drawable/ic_add"
-            app:elevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:gravity="bottom">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="1dp"
+                android:src="@drawable/ic_add"
+                app:elevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 </layout>

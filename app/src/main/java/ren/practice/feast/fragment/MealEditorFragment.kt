@@ -31,7 +31,7 @@ class MealEditorFragment : Fragment() {
         initArguments()
         initRecipeListObserver()
         initTimePicker()
-        initSaveButton()
+        initSaveFab()
 
         return binding.root
     }
@@ -69,8 +69,8 @@ class MealEditorFragment : Fragment() {
         }
     }
 
-    private fun initSaveButton() {
-        binding.buttonSaveMeal.setOnClickListener {
+    private fun initSaveFab() {
+        binding.fabSaveMeal.setOnClickListener {
             viewModel.saveMeal()
             val action = MealEditorFragmentDirections.actionMealEditorFragmentToHomeFragment()
             binding.root.findNavController().navigate(action)

@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
                 dates.add(getCalendarDay(date))
             }
             binding.calendarWeek.removeDecorators()
-            binding.calendarWeek.addDecorator(EventDecorator(resources.getColor(R.color.red, context?.theme), dates))
+            binding.calendarWeek.addDecorator(EventDecorator(resources.getColor(R.color.black, context?.theme), dates))
         }
     }
 

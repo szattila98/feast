@@ -12,8 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        style="@style/ItemContainer"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/text_recipe_name"
@@ -22,16 +22,17 @@
             android:text="@{item.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            style="@style/ItemTextView"
             tools:text="Recipe name" />
 
         <TextView
             android:id="@+id/text_recipe_created"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:text="@{item.created.toString()}"
-            app:layout_constraintStart_toEndOf="@+id/text_recipe_name"
+            style="@style/ItemTextView"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="Recipe created date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

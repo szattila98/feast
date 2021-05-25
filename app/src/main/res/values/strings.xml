@@ -5,7 +5,8 @@
     <string name="meal_name">%d. %s</string>
     <string name="menu_item_add_recipe">Add Recipe</string>
     <string name="menu_item_recipe_list">Recipe List</string>
-    <!--New Recipe fragment-->
+    <string name="tooltip_long_tap_meal">*Long tap a meal to access meal update menu</string>
+    <!--Recipe editor fragment-->
     <string name="recipe_editor_fragment">Recipe Editor</string>
     <string name="name_of_new_recipe">Name of the Recipe</string>
     <string name="ingredients">Ingredients</string>
@@ -17,6 +18,7 @@
     <string name="hint_unit">Unit</string>
     <string name="hint_number">Number</string>
     <string name="hint_desc_text">Description text</string>
+    <string name="tooltip_long_tap_recipe">*Long tap ingredient and description records to delete them</string>
     <!--Recipe List Fragment-->
     <string name="recipe_list_fragment">Recipe List</string>
     <!--Recipe Details Fragment-->
@@ -32,9 +34,12 @@
     <string name="meal_dialog_edit_btn">Edit Meal</string>
     <string name="meal_dialog_delete_btn">Delete Meal</string>
     <string name="meal_dialog_cancel_btn">Cancel</string>
-    <!--Meal Editor Dialog-->
-    <string name="meal_name_hint">Name of the meal</string>
-    <string name="save_meal_btn">Save Meal</string>
+    <!--Meal Editor Fragment-->
     <string name="menu_item_delete_recipe">Delete Recipe</string>
     <string name="menu_item_edit_recipe">Edit Recipe</string>
+    <string name="meal_name_hint">Name of the meal</string>
+    <string name="save_meal_btn">Save Meal</string>
+    <string name="tooltip_tap_again_meal">*Tap a recipe again to remove it</string>
+    <string name="chosen_recipe">Chosen Recipe:</string>
+    <string name="no_chosen_recipe">None</string>
 </resources>
