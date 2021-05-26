@@ -64,6 +64,8 @@ class MealEditorFragment : Fragment() {
 
     private fun initTimePicker() {
         binding.timepickerMeal.setIs24HourView(true)
+        binding.timepickerMeal.hour = viewModel.time.value!!.hour
+        binding.timepickerMeal.minute = viewModel.time.value!!.minute
         binding.timepickerMeal.setOnTimeChangedListener { _, hour, min ->
             viewModel.time.postValue(LocalTime.of(hour, min))
         }

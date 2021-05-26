@@ -12,7 +12,7 @@
     <string name="ingredients">Ingredients</string>
     <string name="add_ingredient">Add Ingredient</string>
     <string name="description">Descriptions</string>
-    <string name="add_description">Add Description</string>
+    <string name="add_description">Add Description Entry</string>
     <string name="hint_ingredient">Ingredient</string>
     <string name="hint_amount">Amount</string>
     <string name="hint_unit">Unit</string>

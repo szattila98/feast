@@ -31,9 +31,9 @@
                     android:id="@+id/text_recipe_details_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    style="@style/BoldBaseTextView"
                     tools:text="Recipe name" />
 
                 <TextView
@@ -43,7 +43,15 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    style="@style/BaseTextView"
                     tools:text="Created date" />
+
+                <View
+                    android:id="@+id/divider1"
+                    style="@style/Divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/text_recipe_details_name" />
 
                 <TextView
                     android:id="@+id/text_recipe_details_ingredients"
@@ -51,7 +59,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ingredients"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_recipe_details_name" />
+                    style="@style/BoldBaseTextView"
+                    app:layout_constraintTop_toBottomOf="@id/divider1" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_recipe_details_ingredients"
@@ -62,13 +71,21 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_ingredient_record" />
 
+                <View
+                    android:id="@+id/divider2"
+                    style="@style/Divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_recipe_details_ingredients" />
+
                 <TextView
                     android:id="@+id/text_recipe_details_descriptions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/description"
+                    style="@style/BoldBaseTextView"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recycler_recipe_details_ingredients" />
+                    app:layout_constraintTop_toBottomOf="@id/divider2" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_recipe_details_descriptions"
@@ -76,7 +93,7 @@
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/text_recipe_details_descriptions"
-                    tools:itemCount="1"
+                    tools:itemCount="2"
                     tools:listitem="@layout/item_description_record" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,7 @@
 
                 <TextView
                     android:id="@+id/text_tooltip"
+                    style="@style/TooltipTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tooltip_long_tap_recipe"
@@ -54,6 +55,7 @@
 
                 <TextView
                     android:id="@+id/text_ingredients"
+                    style="@style/BoldBaseTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ingredients"
@@ -81,8 +83,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="text"
-                            android:text="@={viewModel.ingredientName}"
-                            android:maxLength="15" />
+                            android:maxLength="15"
+                            android:text="@={viewModel.ingredientName}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -97,8 +99,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="text"
-                            android:text="@={viewModel.ingredientAmount}"
-                            android:maxLength="10" />
+                            android:maxLength="10"
+                            android:text="@={viewModel.ingredientAmount}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -113,8 +115,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="text"
-                            android:text="@={viewModel.ingredientUnit}"
-                            android:maxLength="15" />
+                            android:maxLength="15"
+                            android:text="@={viewModel.ingredientUnit}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -137,6 +139,7 @@
 
                 <TextView
                     android:id="@+id/text_descriptions"
+                    style="@style/BoldBaseTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/description"

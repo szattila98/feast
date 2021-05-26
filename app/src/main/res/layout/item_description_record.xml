@@ -14,16 +14,17 @@
     </data>
 
     <LinearLayout
+        style="@style/ItemContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/text_description"
+            style="@style/ItemTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:text="@{@string/description_record_list_item(num, item.text)}"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a aliquam libero. Donec efficitur massa at leo dapibus, sed laoreet felis consequat. Curabitur faucibus diam leo, sit amet hendrerit tellus faucibus a. Aenean nec metus ante. Cras mattis aliquam fringilla. Nulla at quam sit amet nisl euismod pretium. Donec euismod augue quis tellus aliquet accumsan. Nunc vestibulum pretium tortor quis ullamcorper. Maecenas ultricies pellentesque orci in porta. Fusce quis viverra lectus. Sed fringilla ipsum mauris, non luctus nunc volutpat porta. Nunc mauris nibh, pellentesque in risus non, consectetur bibendum nulla. Ut sed purus felis. Cras a accumsan est. Aenean lorem." />
+            tools:text="1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a aliquam libero. Donec efficitur massa at leo dapibus, sed laoreet felis consequat. Curabitur faucibus diam leo, sit amet hendrerit tellus faucibus a. Aenean nec metus ante. Cras mattis aliquam fringilla. Nulla at quam sit amet nisl euismod pretium. Donec euismod augue quis tellus aliquet accumsan." />
 
     </LinearLayout>
 </layout>

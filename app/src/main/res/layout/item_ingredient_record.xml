@@ -9,37 +9,35 @@
             type="ren.practice.core.domain.Ingredient" />
     </data>
 
-        <LinearLayout
+    <LinearLayout
+        style="@style/ItemContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_ingredient_name"
+            style="@style/ItemTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="8dp">
+            android:text="@{item.name}"
+            tools:text="1. Ingredient" />
 
-            <TextView
-                android:id="@+id/text_ingredient_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.name}"
-                tools:text="1. Ingredient" />
+        <TextView
+            android:id="@+id/text_ingredient_amount"
+            style="@style/ItemTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.amount}"
+            tools:text="100" />
 
-            <TextView
-                android:id="@+id/text_ingredient_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@{item.amount}"
-                tools:text="100" />
+        <TextView
+            android:id="@+id/text_ingredient_unit"
+            style="@style/ItemTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.unit}"
+            tools:text="kg" />
 
-            <TextView
-                android:id="@+id/text_ingredient_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@{item.unit}"
-                tools:text="kg" />
-
-        </LinearLayout>
+    </LinearLayout>
 </layout>
