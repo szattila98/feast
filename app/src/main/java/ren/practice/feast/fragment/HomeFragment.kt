@@ -9,7 +9,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ren.practice.feast.R
 import ren.practice.feast.adapter.MealAdapter
 import ren.practice.feast.databinding.FragmentMealCalendarBinding
@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentMealCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: HomeViewModel by inject()
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -35,11 +35,11 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMealCalendarBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
+        binding.viewModel = homeViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         initCalendar()
-        viewModel.readEveryMeal()
+        homeViewModel.readEveryMeal()
         initCalendarDotObserver()
         initRecycler()
         initFab()
@@ -72,7 +72,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initCalendar() {
-        viewModel.currentDate.value?.let { currentDate ->
+        homeViewModel.currentDate.value?.let { currentDate ->
             val plusDaysMin = 7 + currentDate.dayOfWeek.value - 1
             val plusDaysMax = 7 + (7 - currentDate.dayOfWeek.value)
             binding.calendarWeek.state().edit()
@@ -81,14 +81,14 @@ class HomeFragment : Fragment() {
                 .commit()
             binding.calendarWeek.selectedDate = CalendarDay.from(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth)
             binding.calendarWeek.setOnDateChangedListener { _, day, _ ->
-                viewModel.currentDate.value = LocalDate.of(day.year, day.month, day.day)
-                viewModel.readRelevantMeals()
+                homeViewModel.currentDate.value = LocalDate.of(day.year, day.month, day.day)
+                homeViewModel.readRelevantMeals()
             }
         }
     }
 
     private fun initCalendarDotObserver() {
-        viewModel.everyMeal.observe(viewLifecycleOwner) {
+        homeViewModel.everyMeal.observe(viewLifecycleOwner) {
             val dates: MutableSet<CalendarDay> = mutableSetOf()
             for (meal in it) {
                 val date = meal.date.toLocalDate()
@@ -104,8 +104,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        viewModel.readRelevantMeals()
-        val adapter = viewModel.relevantMeals.value?.let { meals ->
+        homeViewModel.readRelevantMeals()
+        val adapter = homeViewModel.relevantMeals.value?.let { meals ->
             MealAdapter(
                 meals.toMutableList(),
                 clickListener = { meal ->
@@ -121,7 +121,7 @@ class HomeFragment : Fragment() {
             )
         }
         binding.recyclerMeals.adapter = adapter
-        viewModel.relevantMeals.observe(viewLifecycleOwner) {
+        homeViewModel.relevantMeals.observe(viewLifecycleOwner) {
             adapter?.update(it)
         }
     }
@@ -134,14 +134,14 @@ class HomeFragment : Fragment() {
                 val action = HomeFragmentDirections
                     .actionHomeFragmentToMealEditorFragment(mealId = mealId)
                 binding.root.findNavController().navigate(action)
-                viewModel.readRelevantMeals()
+                homeViewModel.readRelevantMeals()
                 binding.recyclerMeals.adapter?.notifyDataSetChanged()
             }
             .setNegativeButton(R.string.meal_dialog_delete_btn) { dialog, _ ->
                 dialog.dismiss()
-                viewModel.deleteMeal(mealId)
+                homeViewModel.deleteMeal(mealId)
                 binding.recyclerMeals.adapter?.notifyDataSetChanged()
-                viewModel.readEveryMeal()
+                homeViewModel.readEveryMeal()
             }
             .setNeutralButton(R.string.meal_dialog_cancel_btn) { dialog, _ ->
                 dialog.dismiss()
@@ -151,7 +151,7 @@ class HomeFragment : Fragment() {
 
     private fun initFab() {
         binding.fabNewMeal.setOnClickListener {
-            viewModel.currentDate.value?.let {
+            homeViewModel.currentDate.value?.let {
                 val action = HomeFragmentDirections
                     .actionHomeFragmentToMealEditorFragment(it)
                 binding.root.findNavController().navigate(action)

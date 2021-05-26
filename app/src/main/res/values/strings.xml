@@ -19,6 +19,7 @@
     <string name="hint_number">Number</string>
     <string name="hint_desc_text">Description text</string>
     <string name="tooltip_long_tap_recipe">*Long tap ingredient and description records to delete them</string>
+    <string name="validation_msg_recipe_name">Recipe name should not be empty!</string>
     <!--Recipe List Fragment-->
     <string name="recipe_list_fragment">Recipe List</string>
     <!--Recipe Details Fragment-->
@@ -42,4 +43,5 @@
     <string name="tooltip_tap_again_meal">*Tap a recipe again to remove it</string>
     <string name="chosen_recipe">Chosen Recipe:</string>
     <string name="no_chosen_recipe">None</string>
+    <string name="validation_msg_meal_name">Meal name should not be empty!</string>
 </resources>

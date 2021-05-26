@@ -99,7 +99,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="text"
-                            android:maxLength="10"
+                            android:maxLength="15"
                             android:text="@={viewModel.ingredientAmount}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -155,6 +155,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_descriptions">
 
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/edit_layout_description_text"
                         android:layout_width="0dp"
@@ -165,9 +166,13 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edit_description_text"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:inputType="text"
-                            android:maxLength="500"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|start"
+                            android:inputType="textMultiLine"
+                            android:lines="8"
+                            android:maxLength="400"
+                            android:minLines="2"
+                            android:scrollbars="vertical"
                             android:text="@={viewModel.descriptionText}" />
                     </com.google.android.material.textfield.TextInputLayout>
 

@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import ren.practice.feast.R
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
 import ren.practice.feast.databinding.FragmentRecipeEditorBinding
@@ -17,7 +19,7 @@ class RecipeEditorFragment : Fragment() {
     private var _binding: FragmentRecipeEditorBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RecipeEditorViewModel by inject()
+    private val recipeEditorViewModel: RecipeEditorViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,7 +27,7 @@ class RecipeEditorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeEditorBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
+        binding.viewModel = recipeEditorViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         initArguments()
@@ -44,23 +46,23 @@ class RecipeEditorFragment : Fragment() {
         arguments?.let {
             val recipeId = RecipeEditorFragmentArgs.fromBundle(it).recipeId
             if (recipeId != 0L) {
-                viewModel.recipeId.value = recipeId
-                viewModel.setRecipeDetailsToEdit()
+                recipeEditorViewModel.recipeId.value = recipeId
+                recipeEditorViewModel.setRecipeDetailsToEdit()
             }
         }
     }
 
     private fun initListObservers() {
-        viewModel.ingredients.observe(viewLifecycleOwner) {
+        recipeEditorViewModel.ingredients.observe(viewLifecycleOwner) {
             binding.recyclerIngredients.adapter = IngredientAdapter(it) { ingredient ->
-                viewModel.removeIngredient(ingredient)
+                recipeEditorViewModel.removeIngredient(ingredient)
                 binding.recyclerIngredients.adapter?.notifyDataSetChanged()
             }
         }
-        viewModel.descriptionList.observe(viewLifecycleOwner) {
+        recipeEditorViewModel.descriptionList.observe(viewLifecycleOwner) {
             binding.recyclerDescriptions.adapter =
                 DescriptionAdapter(it) { description ->
-                    viewModel.removeDescriptionRecord(description)
+                    recipeEditorViewModel.removeDescriptionRecord(description)
                     binding.recyclerDescriptions.adapter?.notifyDataSetChanged()
                 }
         }
@@ -68,21 +70,25 @@ class RecipeEditorFragment : Fragment() {
 
     private fun initButtons() {
         binding.buttonAddIngredient.setOnClickListener {
-            viewModel.addIngredient()
+            recipeEditorViewModel.addIngredient()
             binding.recyclerIngredients.adapter?.notifyDataSetChanged()
         }
         binding.buttonAddDescription.setOnClickListener {
-            viewModel.addDescriptionRecord()
+            recipeEditorViewModel.addDescriptionRecord()
             binding.recyclerDescriptions.adapter?.notifyDataSetChanged()
         }
         binding.fabConfirm.setOnClickListener { submitRecipe() }
     }
 
     private fun submitRecipe() {
-        viewModel.newRecipeId.observe(viewLifecycleOwner) {
-            val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(it)
-            binding.root.findNavController().navigate(action)
+        if (recipeEditorViewModel.recipeName.value!!.isNotEmpty()) {
+            recipeEditorViewModel.newRecipeId.observe(viewLifecycleOwner) {
+                val action = RecipeEditorFragmentDirections.actionNewRecipeToRecipeDetailsFragment(it)
+                binding.root.findNavController().navigate(action)
+            }
+            recipeEditorViewModel.submitRecipe()
+            return
         }
-        viewModel.submitRecipe()
+        Toast.makeText(requireContext(), getString(R.string.validation_msg_recipe_name), Toast.LENGTH_SHORT).show()
     }
 }

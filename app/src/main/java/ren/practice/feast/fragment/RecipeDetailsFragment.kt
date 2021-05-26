@@ -6,7 +6,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ren.practice.feast.R
 import ren.practice.feast.adapter.DescriptionAdapter
 import ren.practice.feast.adapter.IngredientAdapter
@@ -18,7 +18,7 @@ class RecipeDetailsFragment : Fragment() {
     private var _binding: FragmentRecipeDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RecipeDetailsViewModel by inject()
+    private val recipeDetailsViewModel: RecipeDetailsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -31,7 +31,7 @@ class RecipeDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeDetailsBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
+        binding.viewModel = recipeDetailsViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         initArguments()
@@ -51,7 +51,7 @@ class RecipeDetailsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.menu_item_edit_recipe -> {
-            viewModel.recipe.value?.let {
+            recipeDetailsViewModel.recipe.value?.let {
                 val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToNewRecipeFragment(it.id)
                 findNavController().navigate(action)
             }
@@ -62,8 +62,8 @@ class RecipeDetailsFragment : Fragment() {
                 .setTitle(R.string.delete_dialog_title)
                 .setPositiveButton(R.string.delete_dialog_delete_option) { dialog, _ ->
                     dialog.dismiss()
-                    viewModel.deleteRecipe()
-                    viewModel.deleteSuccessful.observe(viewLifecycleOwner) {
+                    recipeDetailsViewModel.deleteRecipe()
+                    recipeDetailsViewModel.deleteSuccessful.observe(viewLifecycleOwner) {
                         if (it) {
                             val action = RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToRecipeListFragment()
                             findNavController().navigate(action)
@@ -84,9 +84,9 @@ class RecipeDetailsFragment : Fragment() {
     private fun initArguments() {
         arguments?.let {
             val recipeId = RecipeDetailsFragmentArgs.fromBundle(it).recipeId
-            viewModel.loadRecipe(recipeId)
+            recipeDetailsViewModel.loadRecipe(recipeId)
         }
-        viewModel.recipe.observe(viewLifecycleOwner) {
+        recipeDetailsViewModel.recipe.observe(viewLifecycleOwner) {
             binding.textRecipeDetailsName.text = it.name
             binding.textRecipeDetailsCreated.text = it.created.toString()
             binding.recyclerRecipeDetailsIngredients.adapter =

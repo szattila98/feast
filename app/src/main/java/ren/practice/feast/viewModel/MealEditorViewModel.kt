@@ -39,8 +39,7 @@ class MealEditorViewModel(private val interactors: Interactors) : ViewModel() {
         val dateTime = LocalDateTime.of(date.value, time.value)
         val meal = Meal(mealId.value!!, dateTime, mealName.value!!, chosenRecipeId.value)
         interactors.saveMeal(meal)
-    } // TODO validation
-
+    }
 
     fun setMealDetailsToEdit() = GlobalScope.launch {
         val meal = interactors.findMeal(mealId.value!!)
